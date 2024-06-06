@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editTextLessonName"
+        android:layout_width="match_parent"
+        android:layout_height="71dp"
+        android:hint="Tên bài học" />
+
+    <EditText
+        android:id="@+id/editTextLessonID"
+        android:layout_width="match_parent"
+        android:layout_height="71dp"
+        android:hint="Mã bài học" />
+    <EditText
+        android:id="@+id/editTextLessonType"
+        android:layout_width="match_parent"
+        android:layout_height="71dp"
+        android:hint="Loại" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <EditText
+            android:id="@+id/editTextLessonContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nội dung bài học"
+            android:lines="18" />
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnSaveLesson"
+        android:layout_width="wrap_content"
+        android:layout_height="58dp"
+        android:text="Lưu bài học" />
+
+</LinearLayout>
