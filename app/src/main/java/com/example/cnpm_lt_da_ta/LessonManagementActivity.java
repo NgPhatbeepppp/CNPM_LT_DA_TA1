@@ -100,7 +100,7 @@ public class LessonManagementActivity extends AppCompatActivity  {
         });
 
         // Nút "Không"
-        builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Không!!", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Không làm gì cả
