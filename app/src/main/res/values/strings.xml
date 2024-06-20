@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">CNPM_LT_DA_TA</string>
+    <string name="app_name">LanguageZ</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_account">Account</string>
+    <string name="nav_my_profile">Profile</string>
+    <string name="nav_sign_out">Sign Out</string>
+    <color name="blue">#00f0ff</color>
+    <color name="backgroundColor">#FFFCFC</color>
+    <color name="textHeading">#008eff</color>
 </resources>

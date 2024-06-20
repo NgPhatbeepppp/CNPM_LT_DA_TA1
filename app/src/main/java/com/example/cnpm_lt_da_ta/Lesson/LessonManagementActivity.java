@@ -1,8 +1,7 @@
-package com.example.cnpm_lt_da_ta;
+package com.example.cnpm_lt_da_ta.Lesson;
 
 import static android.widget.Toast.makeText;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,11 +12,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.AdapterView;
+
 import java.util.ArrayList;
 import java.util.List;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+
+import com.example.cnpm_lt_da_ta.Databasehelper;
+import com.example.cnpm_lt_da_ta.R;
+
 
 public class LessonManagementActivity extends AppCompatActivity  {
     private Button addbtn, editbtn, deletebtn;
@@ -100,7 +103,7 @@ public class LessonManagementActivity extends AppCompatActivity  {
         });
 
         // Nút "Không"
-        builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Không!!", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Không làm gì cả
