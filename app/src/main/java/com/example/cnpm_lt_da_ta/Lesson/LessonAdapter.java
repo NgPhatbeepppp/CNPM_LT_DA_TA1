@@ -1,4 +1,4 @@
-package com.example.cnpm_lt_da_ta;
+package com.example.cnpm_lt_da_ta.Lesson;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.cnpm_lt_da_ta.Lesson.Lesson;
+import com.example.cnpm_lt_da_ta.R;
 
 import java.util.List;
 

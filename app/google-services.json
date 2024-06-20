@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "564700687762",
+    "project_id": "ungdunghocngoaingu",
+    "storage_bucket": "ungdunghocngoaingu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:564700687762:android:c25e9f5166d954f5ffe54b",
+        "android_client_info": {
+          "package_name": "com.example.cnpm_lt_da_ta"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4vDAe-Orq_h56nmir3qhimiBy3IddTg8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

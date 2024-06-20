@@ -7,6 +7,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.cnpm_lt_da_ta.Lesson.Lesson;
+import com.example.cnpm_lt_da_ta.Lesson.LessonContract;
+
 import java.util.ArrayList;
 import java.util.List;
 

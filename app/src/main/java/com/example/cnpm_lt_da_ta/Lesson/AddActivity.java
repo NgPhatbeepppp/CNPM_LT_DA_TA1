@@ -1,4 +1,4 @@
-package com.example.cnpm_lt_da_ta;
+package com.example.cnpm_lt_da_ta.Lesson;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -10,6 +10,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
+
+import com.example.cnpm_lt_da_ta.Databasehelper;
+import com.example.cnpm_lt_da_ta.R;
 
 
 public class AddActivity extends AppCompatActivity {
