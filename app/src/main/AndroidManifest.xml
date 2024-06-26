@@ -13,19 +13,7 @@
         android:theme="@style/Theme.CNPM_LT_DA_TA"
         tools:targetApi="31">
         <activity
-            android:name=".Course.FlashcardStudyActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Course.CourseDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".User.EditUserActivity"
-            android:exported="false" />
-        <activity
-            android:name=".User.RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".User.UserManagementActivity"
+            android:name=".UserManagementActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -37,7 +25,7 @@
             android:name=".Lesson.AddActivity"
             android:exported="false" />
         <activity
-            android:name=".User.LoginActivity"
+            android:name=".LoginActivity"
             android:exported="true"
             android:launchMode="singleTop">
             <intent-filter>
@@ -48,7 +36,7 @@
         </activity>
         <activity
             android:name=".Lesson.LessonManagementActivity"
-            android:exported="false" />
+            android:exported="false"></activity>
 
         <meta-data
             android:name="preloaded_fonts"
