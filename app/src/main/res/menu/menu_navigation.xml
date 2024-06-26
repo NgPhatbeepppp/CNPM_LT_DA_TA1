@@ -5,6 +5,16 @@
         android:id="@+id/nav_home"
         android:title="@string/nav_home"
         android:icon="@drawable/ic_home"/>
+    <item
+        android:id="@+id/nav_lesson_management"
+        android:title="Lesson Management"
+        android:icon="@drawable/ic_book" />
+
+    <item
+        android:id="@+id/nav_user_management"
+        android:title="User Management"
+        android:icon="@drawable/ic_group" />
+
 
 </group>
     <item android:title="@string/nav_account">

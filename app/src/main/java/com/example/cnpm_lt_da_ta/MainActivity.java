@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,9 +20,14 @@ import android.widget.Toast;
 
 import com.example.cnpm_lt_da_ta.Lesson.LessonManagementActivity;
 import com.example.cnpm_lt_da_ta.fragment.HomeFragment;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -29,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final int FRAGMENT_HOME = 1;
     private  int mCurrentFRAGMENT =1;
     private Button btnLesson;
+    private DatabaseReference mDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +49,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        FirebaseApp.initializeApp(this);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
         btnLesson.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +69,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // Cập nhật thông tin vào header của Navigation Drawer
             updateNavHeader(name, email);
         }
+        String userId = user.getUid();
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("user").child(userId);
+        userRef.child("role").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String userRole = dataSnapshot.getValue(String.class); // Lấy giá trị role
+                    updateNavigationDrawerItems(userRole);
+                } else {
+                    // Xử lý trường hợp dữ liệu role không tồn tại
+                    Log.w("MainActivity", "User role data not found for userId: " + userId);
+                }
+            }
+        });
+
+
     }
 
 
@@ -89,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mCurrentFRAGMENT = FRAGMENT_HOME;
             }
 
+
         } else if (id == R.id.nav_profile) {
             // Xử lý khi chọn item "My Profile"
         } else if (id == R.id.nav_sign_out) {
@@ -100,6 +128,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
             finish();
         }
+     else if (id == R.id.nav_lesson_management) {
+        // Chuyển hướng đến LessonManagementActivity
+        Intent intent = new Intent(MainActivity.this, LessonManagementActivity.class);
+        startActivity(intent);
+    } else if (id == R.id.nav_user_management) {
+        // Chuyển hướng đến UserManagementActivity (bạn cần tự tạo activity này)
+        Intent intent = new Intent(MainActivity.this, UserManagementActivity.class);
+        startActivity(intent);
+    }
 
         mDL.closeDrawer(GravityCompat.END);
         return true;
@@ -135,4 +172,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         emailTextView.setText(email);
     }
+    private void updateNavigationDrawerItems(String userRole) {
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        Menu menu = navigationView.getMenu();
+        MenuItem lessonManagementItem = menu.findItem(R.id.nav_lesson_management);
+        MenuItem userManagementItem = menu.findItem(R.id.nav_user_management);
+
+        if ("admin".equals(userRole)) {
+            lessonManagementItem.setVisible(true);
+            userManagementItem.setVisible(true);
+        } else {
+            lessonManagementItem.setVisible(false);
+            userManagementItem.setVisible(false);
+        }
+    }
+
 }
