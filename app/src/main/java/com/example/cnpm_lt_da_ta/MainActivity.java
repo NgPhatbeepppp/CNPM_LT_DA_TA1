@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cnpm_lt_da_ta.Lesson.LessonManagementActivity;
+import com.example.cnpm_lt_da_ta.User.LoginActivity;
+import com.example.cnpm_lt_da_ta.User.UserManagementActivity;
 import com.example.cnpm_lt_da_ta.fragment.HomeFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
@@ -68,21 +70,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             // Cập nhật thông tin vào header của Navigation Drawer
             updateNavHeader(name, email);
-        }
-        String userId = user.getUid();
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("user").child(userId);
-        userRef.child("role").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    String userRole = dataSnapshot.getValue(String.class); // Lấy giá trị role
-                    updateNavigationDrawerItems(userRole);
-                } else {
-                    // Xử lý trường hợp dữ liệu role không tồn tại
-                    Log.w("MainActivity", "User role data not found for userId: " + userId);
+            String userId = user.getUid();
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+            userRef.child("role").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                @Override
+                public void onSuccess(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        String userRole = dataSnapshot.getValue(String.class); // Lấy giá trị role
+                        updateNavigationDrawerItems(userRole);
+
+                        Log.d("MainActivity", "Vai trò người dùng: " + userRole);
+                    } else {
+                        // Xử lý trường hợp dữ liệu role không tồn tại
+                        Log.w("MainActivity", "User role data not found for userId: " + userId);
+                    }
                 }
-            }
-        });
+            });
+        }
+
 
 
     }

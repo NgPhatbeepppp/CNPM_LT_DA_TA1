@@ -1,14 +1,16 @@
-package com.example.cnpm_lt_da_ta;
+package com.example.cnpm_lt_da_ta.User;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class UserManagementActivity extends AppCompatActivity {
+import com.example.cnpm_lt_da_ta.R;
+
+public class EditUserActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_management);
+        setContentView(R.layout.activity_edit_user);
     }
 }
