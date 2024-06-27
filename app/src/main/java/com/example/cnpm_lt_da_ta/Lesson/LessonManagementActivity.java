@@ -18,7 +18,6 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
-import com.example.cnpm_lt_da_ta.Databasehelper;
 import com.example.cnpm_lt_da_ta.R;
 
 
