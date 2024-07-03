@@ -32,6 +32,9 @@ public class User implements Serializable {
     public String getName() {
         return name;
     }
+    public String getPhone() {
+        return phone;
+    }
 
     // Setters
     public  void setUserId(String userId) {this.userId = userId;}
@@ -45,5 +48,8 @@ public class User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+    public void setPhone(String phone) {
+        this.name = phone;
     }
 }

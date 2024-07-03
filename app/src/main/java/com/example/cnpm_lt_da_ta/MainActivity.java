@@ -28,8 +28,10 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -56,41 +58,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
-        btnLesson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LessonManagementActivity.class);
-                startActivity(intent);
-            }
-        });
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            String name = user.getDisplayName(); // Lấy tên (có thể null nếu chưa đặt)
-            String email = user.getEmail();
-
-            // Cập nhật thông tin vào header của Navigation Drawer
-            updateNavHeader(name, email);
             String userId = user.getUid();
-            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
-            userRef.child("role").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-                @Override
-                public void onSuccess(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        String userRole = dataSnapshot.getValue(String.class); // Lấy giá trị role
-                        updateNavigationDrawerItems(userRole);
 
-                        Log.d("MainActivity", "Vai trò người dùng: " + userRole);
-                    } else {
-                        // Xử lý trường hợp dữ liệu role không tồn tại
-                        Log.w("MainActivity", "User role data not found for userId: " + userId);
+            // Lấy tham chiếu đến node người dùng
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+
+            // Lắng nghe sự thay đổi dữ liệu người dùng
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        String name = dataSnapshot.child("name").getValue(String.class);
+                        String email = dataSnapshot.child("email").getValue(String.class);
+                        String userRole = dataSnapshot.child("role").getValue(String.class);
+
+                        // Cập nhật header và các item trong Navigation Drawer
+                        updateNavHeader(name, email);
+                        updateNavigationDrawerItems(userRole);
                     }
                 }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Xử lý lỗi
+                }
             });
+        } else {
+            // Xử lý trường hợp người dùng chưa đăng nhập
         }
-
-
-
     }
+
+
+
+
+
 
 
     @Override
@@ -166,15 +170,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     private void updateNavHeader(String name, String email) {
         NavigationView navigationView = findViewById(R.id.navigation_view);
-        View headerView = navigationView.getHeaderView(0); // Lấy header view
+        View headerView = navigationView.getHeaderView(0);
         TextView nameTextView = headerView.findViewById(R.id.nav_header_name);
         TextView emailTextView = headerView.findViewById(R.id.nav_header_email);
 
-        if (name != null) {
-            nameTextView.setText(name);
-        } else {
-
-        }
+        nameTextView.setText(name != null ? name : "Chưa có tên"); // Hiển thị "Chưa có tên" nếu name là null
         emailTextView.setText(email);
     }
     private void updateNavigationDrawerItems(String userRole) {
