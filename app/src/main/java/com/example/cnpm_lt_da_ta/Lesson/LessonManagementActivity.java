@@ -18,7 +18,10 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
+import com.example.cnpm_lt_da_ta.MainActivity;
 import com.example.cnpm_lt_da_ta.R;
+import com.example.cnpm_lt_da_ta.User.UserManagementActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class LessonManagementActivity extends AppCompatActivity  {
@@ -47,6 +50,31 @@ public class LessonManagementActivity extends AppCompatActivity  {
         lessonList = fetchLessonsFromDatabase();
         lessonAdapter = new LessonAdapter(this, lessonList);
         listviewLessons.setAdapter(lessonAdapter);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId(); // Lấy itemId
+
+            if (itemId == R.id.nav_home) {
+                // Chuyển đến MainActivity
+                startActivity(new Intent(LessonManagementActivity.this, MainActivity.class));
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_back) {
+                onBackPressed();
+                return true;
+
+            } else if (itemId == R.id.nav_users) {
+                // Chuyển đến UserManagementActivity
+                startActivity(new Intent(LessonManagementActivity.this, UserManagementActivity.class));
+                finish();
+                return true;
+            }
+
+            return false; // Trả về false nếu không xử lý được itemId
+        });
+
+
+
 
 
         addbtn = findViewById(R.id.btn_add_lesson);

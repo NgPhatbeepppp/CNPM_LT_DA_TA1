@@ -1,5 +1,6 @@
 package com.example.cnpm_lt_da_ta.User;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +41,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User user = userList.get(position);
-        holder.textViewName.setText(user.getName());
-        holder.textViewEmail.setText(user.getEmail());
-        holder.textViewRole.setText(user.getRole());
+        if (user != null) {
+            holder.textViewName.setText(user.getName() != null ? user.getName() : "Chưa có tên");
+            holder.textViewEmail.setText(user.getEmail() != null ? user.getEmail() : "Chưa có email");
+            holder.textViewPhone.setText(user.getPhone());
+            holder.textViewRole.setText(user.getRole() != null ? user.getRole() : "Chưa có vai trò");
+        } else {
+            Log.e("UserAdapter", "User object is null at position " + position);
+        }
 
         holder.buttonEditUser.setOnClickListener(v -> {
             if (listener != null) {
@@ -68,7 +74,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
 
     static class UserViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewName, textViewEmail, textViewRole;
+        TextView textViewName, textViewEmail, textViewRole, textViewPhone;
         ImageButton buttonEditUser, buttonDeleteUser;
 
         UserViewHolder(View itemView) {
@@ -76,6 +82,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             textViewName = itemView.findViewById(R.id.text_view_user_name);
             textViewEmail = itemView.findViewById(R.id.text_view_user_email);
             textViewRole = itemView.findViewById(R.id.text_view_user_role);
+            textViewPhone = itemView.findViewById(R.id.text_view_user_phone);
             buttonEditUser = itemView.findViewById(R.id.button_edit_user);
             buttonDeleteUser = itemView.findViewById(R.id.button_delete_user);
         }

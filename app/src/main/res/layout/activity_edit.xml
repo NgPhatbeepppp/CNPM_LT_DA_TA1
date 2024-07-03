@@ -1,51 +1,70 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp">
 
-    <EditText
-        android:id="@+id/edit_text_lesson_name"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:hint="Tên bài học" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_above="@id/bottom_navigation">
 
-    <EditText
-        android:id="@+id/edit_text_lesson_id"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:hint="Mã bài học" />
-
-    <EditText
-        android:id="@+id/edit_text_lesson_type"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:hint="Loại bài học" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <LinearLayout
+        <EditText
+            android:id="@+id/edit_text_lesson_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-            <EditText
-                android:id="@+id/edit_text_lesson_content"
+            android:layout_height="60dp"
+            android:hint="Tên bài học"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/edit_text_lesson_id"
+            android:layout_width="match_parent"
+            android:layout_height="63dp"
+            android:hint="Mã bài học"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/edit_text_lesson_type"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:hint="Loại bài học"
+            android:inputType="text" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="top"
-                android:hint="Nội dung bài học"
-                android:inputType="textMultiLine"
-                android:lines="15" />
-        </LinearLayout>
-    </ScrollView>
+                android:orientation="vertical"
+                android:padding="16dp">
+                <EditText
+                    android:id="@+id/edit_text_lesson_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:hint="Nội dung bài học"
+                    android:inputType="textMultiLine"
+                    android:lines="15" />
+            </LinearLayout>
+        </ScrollView>
 
-    <Button
-        android:id="@+id/button_save_edit"
-        android:layout_width="142dp"
-        android:layout_height="64dp"
-        android:text="Lưu thay đổi" />
+        <Button
+            android:id="@+id/button_save_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lưu thay đổi" />
+    </LinearLayout>
 
-</LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="67dp"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_nav_menu" />
+
+</RelativeLayout>

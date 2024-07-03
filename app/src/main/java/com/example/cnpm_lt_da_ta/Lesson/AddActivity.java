@@ -1,6 +1,7 @@
 package com.example.cnpm_lt_da_ta.Lesson;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -11,7 +12,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
+import com.example.cnpm_lt_da_ta.MainActivity;
 import com.example.cnpm_lt_da_ta.R;
+import com.example.cnpm_lt_da_ta.User.UserManagementActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class AddActivity extends AppCompatActivity {
@@ -37,6 +41,28 @@ public class AddActivity extends AppCompatActivity {
 
         int lessonCount = getLessonCount();
         Log.d("LessonCount", "Số lượng bài học: " + lessonCount);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId(); // Lấy itemId
+
+            if (itemId == R.id.nav_home) {
+                // Chuyển đến MainActivity
+                startActivity(new Intent(AddActivity.this, MainActivity.class));
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_back) {
+                onBackPressed();
+                return true;
+
+            } else if (itemId == R.id.nav_users) {
+                // Chuyển đến UserManagementActivity
+                startActivity(new Intent(AddActivity.this, UserManagementActivity.class));
+                finish();
+                return true;
+            }
+
+            return false; // Trả về false nếu không xử lý được itemId
+        });
 
 
         btnSaveLesson.setOnClickListener(new View.OnClickListener() {

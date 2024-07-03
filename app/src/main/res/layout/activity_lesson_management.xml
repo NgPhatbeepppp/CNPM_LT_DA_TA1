@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <ListView
         android:id="@+id/listview_lessons"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation">
 
         <Button
             android:id="@+id/btn_add_lesson"
@@ -23,8 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="12dp"
-            android:textSize="18sp"
-            android:text="Thêm" />
+            android:text="Thêm"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btn_edit_lesson"
@@ -32,8 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="12dp"
-            android:textSize="18sp"
-            android:text="Sửa" />
+            android:text="Sửa"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btn_delete_lesson"
@@ -41,9 +49,19 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="12dp"
-            android:textSize="18sp"
-            android:text="Xóa" />
-
+            android:text="Xóa"
+            android:textSize="18sp" />
     </LinearLayout>
 
-</LinearLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="414dp"
+        android:layout_height="67dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

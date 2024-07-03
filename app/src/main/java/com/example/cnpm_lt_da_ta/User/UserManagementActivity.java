@@ -14,7 +14,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.cnpm_lt_da_ta.Lesson.LessonManagementActivity;
+import com.example.cnpm_lt_da_ta.MainActivity;
 import com.example.cnpm_lt_da_ta.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -49,6 +53,29 @@ public class UserManagementActivity extends AppCompatActivity implements UserAda
         recyclerViewUsers.setLayoutManager(new LinearLayoutManager(this));
         userAdapter = new UserAdapter(userList, this);
         recyclerViewUsers.setAdapter(userAdapter);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId(); // Lấy itemId
+
+            if (itemId == R.id.nav_home) {
+                // Chuyển đến MainActivity
+                startActivity(new Intent(UserManagementActivity.this, MainActivity.class));
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_back) {
+                onBackPressed();
+                return true;
+
+            } else if (itemId == R.id.nav_users) {
+                // Chuyển đến UserManagementActivity
+                startActivity(new Intent(UserManagementActivity.this, UserManagementActivity.class));
+                finish();
+                return true;
+            }
+
+            return false; // Trả về false nếu không xử lý được itemId
+        });
+
 
 
         // Lấy danh sách người dùng từ Firebase
@@ -89,6 +116,9 @@ public class UserManagementActivity extends AppCompatActivity implements UserAda
                     if (user != null) {
                         user.setUserId(userSnapshot.getKey()); // Đặt userId cho đối tượng User
                         userList.add(user);
+                    } else {
+                        // Xử lý trường hợp user là null (ví dụ: ghi log lỗi)
+                        Log.e("UserManagementActivity", "Null user object at: " + userSnapshot.getKey());
                     }
                 }
                 userAdapter.updateUsers(userList);
@@ -96,10 +126,13 @@ public class UserManagementActivity extends AppCompatActivity implements UserAda
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("UserManagementActivity", "Lỗi khi lấy danh sách người dùng", databaseError.toException());
+                // Xử lý lỗi
+                Log.e("UserManagementActivity", "Lỗi khi lấy danh sách người dùng: " + databaseError.getMessage());
             }
         });
     }
+
+
 
     private void searchUsers(String query) {
         List<User> filteredUsers = new ArrayList<>();
@@ -142,4 +175,5 @@ public class UserManagementActivity extends AppCompatActivity implements UserAda
             fetchUsers();
         }
     }
+
 }

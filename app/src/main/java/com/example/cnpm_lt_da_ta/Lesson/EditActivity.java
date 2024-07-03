@@ -12,7 +12,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cnpm_lt_da_ta.MainActivity;
 import com.example.cnpm_lt_da_ta.R;
+import com.example.cnpm_lt_da_ta.User.UserManagementActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class EditActivity extends AppCompatActivity {
 
@@ -36,6 +39,28 @@ public class EditActivity extends AppCompatActivity {
         editTextLessonContent = findViewById(R.id.edit_text_lesson_content);
         buttonSaveEdit = findViewById(R.id.button_save_edit);
         dbHelper = new Databasehelper(this);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId(); // Lấy itemId
+
+            if (itemId == R.id.nav_home) {
+                // Chuyển đến MainActivity
+                startActivity(new Intent(EditActivity.this, MainActivity.class));
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_back) {
+                onBackPressed();
+                return true;
+
+            } else if (itemId == R.id.nav_users) {
+                // Chuyển đến UserManagementActivity
+                startActivity(new Intent(EditActivity.this, UserManagementActivity.class));
+                finish();
+                return true;
+            }
+
+            return false; // Trả về false nếu không xử lý được itemId
+        });
 
         // Lấy lessonId từ Intent
         Intent intent = getIntent();

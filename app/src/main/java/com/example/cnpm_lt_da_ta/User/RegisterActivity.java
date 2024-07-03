@@ -2,6 +2,7 @@ package com.example.cnpm_lt_da_ta.User;
 
 // ... các import
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,7 +11,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cnpm_lt_da_ta.MainActivity;
 import com.example.cnpm_lt_da_ta.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -36,9 +39,32 @@ public class RegisterActivity extends AppCompatActivity {
         radioGroupRole = findViewById(R.id.radio_group_role);
         Button buttonRegister = findViewById(R.id.button_register);
 
+
         // Khởi tạo Firebase Authentication và Realtime Database reference
         mAuth = FirebaseAuth.getInstance();
         usersRef = FirebaseDatabase.getInstance().getReference("users");
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId(); // Lấy itemId
+
+            if (itemId == R.id.nav_home) {
+                // Chuyển đến MainActivity
+                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_back) {
+                onBackPressed();
+                return true;
+
+            } else if (itemId == R.id.nav_users) {
+                // Chuyển đến UserManagementActivity
+                startActivity(new Intent(RegisterActivity.this, UserManagementActivity.class));
+                finish();
+                return true;
+            }
+
+            return false; // Trả về false nếu không xử lý được itemId
+        });
 
         buttonRegister.setOnClickListener(v -> {
             String email = editTextEmail.getText().toString().trim();
