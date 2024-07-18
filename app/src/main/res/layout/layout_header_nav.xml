@@ -5,10 +5,11 @@
     android:orientation="vertical"
     android:background="@color/pink">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/nav_header_avatar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher_foreground"/>
+        android:layout_height="120dp"
+        android:src="@drawable/default_user"/>
     <TextView
         android:id="@+id/nav_header_name"
         android:layout_width="wrap_content"

@@ -6,18 +6,23 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.cnpm_lt_da_ta.DatabaseHelper;
 import com.example.cnpm_lt_da_ta.R;
+import com.example.cnpm_lt_da_ta.fragment.HomeFragment;
+import com.example.cnpm_lt_da_ta.fragment.MyProfileFragment;
+import com.example.cnpm_lt_da_ta.fragment.NewsFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,13 +38,17 @@ public class UserManagementActivity extends AppCompatActivity implements UserAda
     private DatabaseReference usersRef;
     private EditText editTextSearch;
     private FloatingActionButton fabAddUser;
+    public static final int FRAGMENT_HOME = 1;
+    public static final int FRAGMENT_NEWS = 2;
+    public static final int FRAGMENT_USER = 3;
+    private  int mCurrentFRAGMENT =1;
     private List<User> userList = new ArrayList<>(); // Danh sách người dùng
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_management);
-
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
         recyclerViewUsers = findViewById(R.id.recycler_view_users);
         editTextSearch = findViewById(R.id.edit_text_search_user);
         fabAddUser = findViewById(R.id.fab_add_user);
@@ -49,6 +58,31 @@ public class UserManagementActivity extends AppCompatActivity implements UserAda
         recyclerViewUsers.setLayoutManager(new LinearLayoutManager(this));
         userAdapter = new UserAdapter(userList, this);
         recyclerViewUsers.setAdapter(userAdapter);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.home) {
+                replacefragment(new HomeFragment());
+                mCurrentFRAGMENT = FRAGMENT_HOME;
+                return true;
+            } else if (itemId == R.id.news) {
+                replacefragment(new NewsFragment());
+                mCurrentFRAGMENT = FRAGMENT_NEWS;
+                return true;
+            } else if (itemId == R.id.user) {
+                replacefragment(new MyProfileFragment());
+                mCurrentFRAGMENT = FRAGMENT_USER;
+                return true;
+            } else if (itemId == R.id.back) {
+                onBackPressed();
+                return true;
+            } else {
+                // Xử lý trường hợp không có itemId nào khớp
+                return false;
+            }
+        });
+
 
 
         // Lấy danh sách người dùng từ Firebase
@@ -141,5 +175,11 @@ public class UserManagementActivity extends AppCompatActivity implements UserAda
             // Cập nhật lại danh sách người dùng khi thêm user mới
             fetchUsers();
         }
+    }
+    private void replacefragment(Fragment fragment){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content_frame, fragment);
+        transaction.commit();
+
     }
 }
