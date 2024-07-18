@@ -1,60 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:context=".UserManagementActivity">
 
-    <EditText
-        android:id="@+id/edit_text_search_user"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Tìm kiếm người dùng" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_users"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:src="@drawable/ic_app_user" />
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <FrameLayout
-            android:id="@+id/frame_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </FrameLayout>
-
-            <com.google.android.material.bottomappbar.BottomAppBar
-                android:id="@+id/bottomAppBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:background="@color/white"
-                app:fabAlignmentMode="center"
-                app:fabCradleMargin="10dp"
-                app:fabCradleRoundedCornerRadius="50dp">
-
-                <com.google.android.material.bottomnavigation.BottomNavigationView
-                    android:id="@+id/bottomNavigationView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    app:labelVisibilityMode="labeled"
-                    app:menu="@menu/bottom_menu" />
-
-            </com.google.android.material.bottomappbar.BottomAppBar>
-
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</LinearLayout>
-
+</androidx.constraintlayout.widget.ConstraintLayout>
