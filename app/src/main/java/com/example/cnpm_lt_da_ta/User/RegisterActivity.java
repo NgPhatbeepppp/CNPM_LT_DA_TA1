@@ -9,8 +9,14 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cnpm_lt_da_ta.R;
+import com.example.cnpm_lt_da_ta.fragment.HomeFragment;
+import com.example.cnpm_lt_da_ta.fragment.MyProfileFragment;
+import com.example.cnpm_lt_da_ta.fragment.NewsFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -22,6 +28,10 @@ public class RegisterActivity extends AppCompatActivity {
     private RadioGroup radioGroupRole;
     private FirebaseAuth mAuth;
     private DatabaseReference usersRef;
+    public static final int FRAGMENT_HOME = 1;
+    public static final int FRAGMENT_NEWS = 2;
+    public static final int FRAGMENT_USER = 3;
+    private  int mCurrentFRAGMENT =1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +45,30 @@ public class RegisterActivity extends AppCompatActivity {
         editTextPhone = findViewById(R.id.edit_text_phone);
         radioGroupRole = findViewById(R.id.radio_group_role);
         Button buttonRegister = findViewById(R.id.button_register);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.home) {
+                replacefragment(new HomeFragment());
+                mCurrentFRAGMENT = FRAGMENT_HOME;
+                return true;
+            } else if (itemId == R.id.news) {
+                replacefragment(new NewsFragment());
+                mCurrentFRAGMENT = FRAGMENT_NEWS;
+                return true;
+            } else if (itemId == R.id.user) {
+                replacefragment(new MyProfileFragment());
+                mCurrentFRAGMENT = FRAGMENT_USER;
+                return true;
+            } else if (itemId == R.id.back) {
+                onBackPressed();
+                return true;
+            } else {
+                // Xử lý trường hợp không có itemId nào khớp
+                return false;
+            }
+        });
 
         // Khởi tạo Firebase Authentication và Realtime Database reference
         mAuth = FirebaseAuth.getInstance();
@@ -81,5 +115,11 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
         });
+    }
+    private void replacefragment(Fragment fragment){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content_frame, fragment);
+        transaction.commit();
+
     }
 }

@@ -14,6 +14,7 @@
          android:orientation="vertical">
 
          <com.google.android.material.appbar.AppBarLayout
+             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -21,8 +22,8 @@
              <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/design_default_color_primary_dark"
+                android:layout_height="50dp"
+                android:background="@color/aliceblue"
                 app:popupTheme="@style/Theme.AppCompat.Light"/>
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -31,19 +32,51 @@
          android:layout_width="match_parent"
          android:layout_height="match_parent">
 
-         <Button
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:id="@+id/btn_Lesson"
-             android:text="Lesson"
-             android:textSize="12dp"
-             android:textStyle="bold"
-             android:layout_gravity="bottom"
-             android:layout_marginLeft="30dp"/>
+         <androidx.recyclerview.widget.RecyclerView
+             android:id="@+id/rvCourseList"
+             android:layout_width="match_parent"
+             android:layout_height="599dp"
+             android:layout_below="@id/appBarLayout" />
+
      </FrameLayout>
 
 
      </LinearLayout>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <FrameLayout
+            android:id="@+id/frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottomAppBar"
+            style="@style/AppBottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="69dp"
+            android:layout_gravity="bottom"
+            android:background="@color/white"
+            app:fabAlignmentMode="center"
+            app:fabCradleMargin="10dp"
+            app:fabCradleRoundedCornerRadius="50dp">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigationView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                app:labelVisibilityMode="labeled"
+                app:menu="@menu/bottom_menu" />
+
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
      <com.google.android.material.navigation.NavigationView
          android:id="@+id/navigation_view"
          android:layout_width="wrap_content"
@@ -51,5 +84,6 @@
          app:headerLayout="@layout/layout_header_nav"
          android:layout_gravity="end"
          app:menu="@menu/menu_navigation"/>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

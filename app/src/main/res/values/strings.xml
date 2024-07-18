@@ -7,4 +7,7 @@
     <color name="blue">#00f0ff</color>
     <color name="backgroundColor">#FFFCFC</color>
     <color name="textHeading">#008eff</color>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sign_in">Sign In</string>
 </resources>

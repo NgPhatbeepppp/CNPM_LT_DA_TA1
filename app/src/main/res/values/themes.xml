@@ -5,5 +5,15 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+
     <style name="Theme.CNPM_LT_DA_TA" parent="Base.Theme.CNPM_LT_DA_TA" />
+    <style name="AppBottomAppBar" parent="@style/Widget.MaterialComponents.BottomAppBar">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.AppBottomAppBar</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.AppBottomAppBar" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+        <item name="backgroundTint">@color/white</item>
+    </style>
 </resources>
