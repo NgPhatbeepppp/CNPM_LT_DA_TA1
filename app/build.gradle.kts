@@ -43,6 +43,11 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-database")
     implementation ("com.google.android.material:material:1.9.0")
+    implementation("com.google.firebase:firebase-storage")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+    implementation ("com.squareup.picasso:picasso:2.71828")
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
+
 
 
 }

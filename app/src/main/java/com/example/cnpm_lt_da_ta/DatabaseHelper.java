@@ -4,12 +4,16 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Thông tin cơ sở dữ liệu
     private static final String DATABASE_NAME = "language_learning.db";
     private static final int DATABASE_VERSION = 3;
+    private Context context;
 
     // Tên các bảng và cột
     public static final String TABLE_COURSE = "course";
@@ -32,6 +36,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_FLASHCARD_PRONUNCIATION = "pronunciation";
     public static final String COLUMN_FLASHCARD_IMAGE = "image";
     public static final String COLUMN_FLASHCARD_SET_ID = "flashcardSetId";
+    public static final String TABLE_DICTIONARY = "dictionary";
+    public static final String COLUMN_DICTIONARY_ID = "id";
+    public static final String COLUMN_DICTIONARY_WORD = "word";
+    public static final String COLUMN_DICTIONARY_MEANING = "meaning";
+    public static final String COLUMN_DICTIONARY_PRONUNCIATION = "pronunciation";
+    public static final String COLUMN_DICTIONARY_TYPE = "type";
+    public static final String COLUMN_DICTIONARY_EXAMPLE = "example";
 
 
     // Câu lệnh SQL tạo bảng
@@ -63,9 +74,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + COLUMN_FLASHCARD_SET_ID + " INTEGER,"
                     + "FOREIGN KEY (" + COLUMN_FLASHCARD_SET_ID + ") REFERENCES " + TABLE_FLASHCARDSET + "(" + COLUMN_FLASHCARDSET_ID + ")"
                     + ")";
+    private static final String CREATE_TABLE_DICTIONARY =
+            "CREATE TABLE " + TABLE_DICTIONARY + "(" +
+                    COLUMN_DICTIONARY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_DICTIONARY_WORD + " TEXT, " +
+                    COLUMN_DICTIONARY_MEANING + " TEXT, " +
+                    COLUMN_DICTIONARY_PRONUNCIATION + " TEXT, " +
+                    COLUMN_DICTIONARY_TYPE + " TEXT, " +
+                    COLUMN_DICTIONARY_EXAMPLE + " TEXT" +
+                    ")";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -73,6 +94,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_COURSE);
         db.execSQL(CREATE_TABLE_FLASHCARDSET);
         db.execSQL(CREATE_TABLE_FLASHCARD);
+        db.execSQL(CREATE_TABLE_DICTIONARY); // Tạo bảng dictionary
+
+        try {
+            insertDictionaryDataFromAssets(db);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // Dữ liệu mẫu cho bảng Course
         String[] courseNames = {"Tiếng Anh Giao Tiếp", "Tiếng Anh Thương Mại", "Tiếng Anh Du Lịch", "Tiếng Anh Thi IELTS", "Tiếng Anh Thi TOEIC"};
         String[] courseDescriptions = {
@@ -136,5 +164,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
-
+    private void insertDictionaryDataFromAssets(SQLiteDatabase db) throws IOException {
+        InputStream is = context.getAssets().open("anhviet109K.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        String line;
+        String currentWord = ""; // Biến lưu trữ từ vựng hiện tại
+        String currentPronunciation = ""; // Biến lưu trữ phiên âm hiện tại
+        StringBuilder currentMeaning = new StringBuilder(); // Biến lưu trữ nghĩa hiện tại
+        String currentType = "";
+        String currentExample = "";
+        while ((line = reader.readLine()) != null) {
+            if (line.startsWith("@")) {
+                // Bắt đầu một từ mới, lưu từ và phiên âm (nếu có)
+                String[] parts = line.substring(1).split("/"); // Loại bỏ "@" và tách từ/phiên âm
+                currentWord = parts[0].trim();
+                currentPronunciation = (parts.length > 1) ? parts[1].trim() : null;
+                currentMeaning.setLength(0); // Reset StringBuilder cho nghĩa mới
+            } else if (line.startsWith("-")) {
+                // Đây là dòng nghĩa tiếng Việt
+                currentMeaning.append(line.substring(1).trim()).append("\n"); // Thêm nghĩa vào StringBuilder
+            } else if (line.startsWith("*")) {
+                // Đây là dòng loại từ
+                currentType = line.substring(1).trim();
+            } else if (line.startsWith("=")) {
+                // Đây là dòng ví dụ, bạn có thể xử lý nếu cần
+                currentExample = line.substring(1).trim();
+            } else if (line.isEmpty()) {
+                // Dòng trống, kết thúc một từ
+                // Chèn vào cơ sở dữ liệu
+                ContentValues values = new ContentValues();
+                values.put(COLUMN_DICTIONARY_WORD, currentWord);
+                values.put(COLUMN_DICTIONARY_MEANING, currentMeaning.toString());
+                values.put(COLUMN_DICTIONARY_PRONUNCIATION, currentPronunciation);
+                values.put(COLUMN_DICTIONARY_TYPE, currentType);
+                values.put(COLUMN_DICTIONARY_EXAMPLE, currentExample);
+                db.insert(TABLE_DICTIONARY, null, values);
+            }
+        }
+        reader.close();
+    }
 }

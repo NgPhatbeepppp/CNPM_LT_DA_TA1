@@ -1,89 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
- android:id="@+id/drawer_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     tools:openDrawer="end">
 
-     <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-         <com.google.android.material.appbar.AppBarLayout
-             android:id="@+id/appBarLayout"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-             <androidx.appcompat.widget.Toolbar
+            <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/aliceblue"
-                app:popupTheme="@style/Theme.AppCompat.Light"/>
+                app:popupTheme="@style/Theme.AppCompat.Light" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/searchEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Tìm kiếm"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
-     <FrameLayout
-         android:id="@+id/content_frame"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent">
 
-         <androidx.recyclerview.widget.RecyclerView
-             android:id="@+id/rvCourseList"
-             android:layout_width="match_parent"
-             android:layout_height="599dp"
-             android:layout_below="@id/appBarLayout" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-     </FrameLayout>
+            <Button
+                android:id="@+id/btnCourse"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Course"
+                android:textColor="@color/black" />
 
-
-     </LinearLayout>
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+            <Button
+                android:id="@+id/btnDictionary"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Dictionary"
+                android:textColor="@color/black" />
+        </LinearLayout>
 
         <FrameLayout
-            android:id="@+id/frame_layout"
+            android:id="@+id/content_frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="517dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCourseList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvDictionary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        app:headerLayout="@layout/layout_header_nav"
+        app:menu="@menu/menu_navigation" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottomAppBar"
             style="@style/AppBottomAppBar"
             android:layout_width="match_parent"
-            android:layout_height="69dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/white"
             app:fabAlignmentMode="center"
             app:fabCradleMargin="10dp"
-            app:fabCradleRoundedCornerRadius="50dp">
+            app:fabCradleRoundedCornerRadius="50dp" />
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottomNavigationView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                app:labelVisibilityMode="labeled"
-                app:menu="@menu/bottom_menu" />
-
-        </com.google.android.material.bottomappbar.BottomAppBar>
-
-
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_menu" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-     <com.google.android.material.navigation.NavigationView
-         android:id="@+id/navigation_view"
-         android:layout_width="wrap_content"
-         android:layout_height="match_parent"
-         app:headerLayout="@layout/layout_header_nav"
-         android:layout_gravity="end"
-         app:menu="@menu/menu_navigation"/>
-
 
 </androidx.drawerlayout.widget.DrawerLayout>
