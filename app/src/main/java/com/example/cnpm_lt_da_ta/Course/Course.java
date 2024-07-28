@@ -25,6 +25,8 @@ public class Course {
         this.popularity = popularity;
         this.isNew = isNew;
     }
+
+
     // Getters
     public int getId() {
         return id;

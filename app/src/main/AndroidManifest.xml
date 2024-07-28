@@ -24,6 +24,11 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+        <activity android:name=".Course.CourseDetailActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".Course.FlashcardStudyActivity"
+            android:exported="false" />
         <activity
             android:name=".Lesson.EditActivity"
             android:exported="false" />

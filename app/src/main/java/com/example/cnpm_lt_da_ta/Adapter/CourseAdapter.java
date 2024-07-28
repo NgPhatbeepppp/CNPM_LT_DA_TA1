@@ -2,6 +2,7 @@ package com.example.cnpm_lt_da_ta.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.cnpm_lt_da_ta.Course.Course;
 import com.example.cnpm_lt_da_ta.Course.CourseDetailActivity;
+import com.example.cnpm_lt_da_ta.Course.Dictionary;
 import com.example.cnpm_lt_da_ta.R;
 
 import java.util.List;
@@ -37,6 +39,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     @Override
     public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
         Course course = courses.get(position);
+        Log.d("CourseAdapter", "onBindViewHolder - Course: " + course.toString());
+        // Đặt dữ liệu vào các thành phần View
         holder.tvCourseName.setText(course.getName());
         holder.tvCourseDescription.setText(course.getDescription());
         try {
@@ -69,7 +73,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 
     public static class CourseViewHolder extends RecyclerView.ViewHolder {
         ImageView ivCourseImage;
-        TextView tvCourseName, tvCourseDescription, tvCourseLevel;
+        TextView tvCourseName, tvCourseDescription;
 
         public CourseViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,5 +81,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
             tvCourseName = itemView.findViewById(R.id.tvCourseName);
             tvCourseDescription = itemView.findViewById(R.id.tvCourseDescription);
         }
+    }
+    public void updateData(List<Course> newCourseList) {
+        courses = newCourseList;
+        Log.d("CourseAdapter", "updateData - New course list size: " + courses.size());
+        notifyDataSetChanged();
     }
 }

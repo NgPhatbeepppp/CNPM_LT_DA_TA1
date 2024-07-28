@@ -55,7 +55,7 @@ public class CourseDetailActivity extends AppCompatActivity {
                     Glide.with(this).load(course.getImage()).into(ivCourseImage);
                 } catch (Exception e) {
                     // Xử lý lỗi tải ảnh ở đây (ví dụ: hiển thị ảnh mặc định)
-                    ivCourseImage.setImageResource(R.drawable.default_image);
+                    ivCourseImage.setImageResource(R.drawable.lesson);
                 }
             }
 

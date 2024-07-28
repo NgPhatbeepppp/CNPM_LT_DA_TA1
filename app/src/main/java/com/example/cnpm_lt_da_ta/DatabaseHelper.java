@@ -12,7 +12,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Thông tin cơ sở dữ liệu
     private static final String DATABASE_NAME = "language_learning.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 5;
     private Context context;
 
     // Tên các bảng và cột
@@ -101,69 +101,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // Dữ liệu mẫu cho bảng Course
-        String[] courseNames = {"Tiếng Anh Giao Tiếp", "Tiếng Anh Thương Mại", "Tiếng Anh Du Lịch", "Tiếng Anh Thi IELTS", "Tiếng Anh Thi TOEIC"};
-        String[] courseDescriptions = {
-                "Nâng cao kỹ năng giao tiếp tiếng Anh",
-                "Tiếng Anh chuyên ngành kinh doanh",
-                "Tiếng Anh giao tiếp khi đi du lịch",
-                "Luyện thi IELTS hiệu quả",
-                "Luyện thi TOEIC đạt điểm cao"
-        };
-        String[] courseImages = {"lesson", "lesson", "lesson", "lesson4", "lesson5"};
-
-        for (int i = 0; i < courseNames.length; i++) {
-            ContentValues courseValues = new ContentValues();
-            courseValues.put(COLUMN_COURSE_NAME, courseNames[i]);
-            courseValues.put(COLUMN_COURSE_DESCRIPTION, courseDescriptions[i]);
-            courseValues.put(COLUMN_COURSE_IMAGE, courseImages[i]);
-            courseValues.put(COLUMN_COURSE_POPULARITY, 80 + i * 5); // Giả sử độ phổ biến tăng dần
-            courseValues.put(COLUMN_COURSE_IS_NEW, i % 2); // Các khóa học xen kẽ mới/cũ
-            db.insert(TABLE_COURSE, null, courseValues);
-        }
-
-        // Dữ liệu mẫu cho bảng FlashcardSet
-        String[] flashcardSetNames = {
-                "Từ vựng cơ bản", "Ngữ pháp cơ bản", "Hội thoại giao tiếp",
-                "Từ vựng nâng cao", "Thành ngữ tiếng Anh", "Từ vựng chuyên ngành kinh doanh",
-                "Email và thư tín thương mại", "Từ vựng du lịch", "Hỏi đường và chỉ đường",
-                "Từ vựng IELTS", "Bài mẫu IELTS Writing", "Từ vựng TOEIC", "Đọc hiểu TOEIC"
-        };
-
-        for (int i = 0; i < flashcardSetNames.length; i++) {
-            ContentValues flashcardSetValues = new ContentValues();
-            flashcardSetValues.put(COLUMN_FLASHCARDSET_NAME, flashcardSetNames[i]);
-            flashcardSetValues.put(COLUMN_FLASHCARDSET_COURSE_ID, (i / 3) + 1); // Mỗi khóa học có 3 bộ flashcard
-            db.insert(TABLE_FLASHCARDSET, null, flashcardSetValues);
-        }
-
-        // Dữ liệu mẫu cho bảng Flashcard (bạn có thể thêm nhiều hơn)
-        String[] words = {"hello", "goodbye", "thank you", "please", "yes", "no"};
-        String[] meanings = {"xin chào", "tạm biệt", "cảm ơn", "làm ơn", "có", "không"};
-        String[] pronunciations = {"həˈloʊ", "ˌɡʊdˈbaɪ", "θæŋk juː", "pliːz", "jes", "noʊ"};
-        String[] images = {"hello", "goodbye", null, null, null, null}; // Hoặc đường dẫn đến ảnh trong drawable nếu có
-
-        for (int i = 0; i < words.length; i++) {
-            ContentValues flashcardValues = new ContentValues();
-            flashcardValues.put(COLUMN_FLASHCARD_WORD, words[i]);
-            flashcardValues.put(COLUMN_FLASHCARD_MEANING, meanings[i]);
-            flashcardValues.put(COLUMN_FLASHCARD_PRONUNCIATION, pronunciations[i]);
-            flashcardValues.put(COLUMN_FLASHCARD_IMAGE, images[i]);
-            flashcardValues.put(COLUMN_FLASHCARD_SET_ID, 1); // Thuộc bộ flashcard "Từ vựng cơ bản"
-            db.insert(TABLE_FLASHCARD, null, flashcardValues);
-        }
+        insertSampleCourseData(db);
+        insertSampleFlashcardSetData(db);
+        insertSampleFlashcardData(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-        if (oldVersion < 3) {
-            // Nâng cấp từ phiên bản 2 lên 3: Thêm các cột popularity và isNew vào bảng Course
-            db.execSQL("ALTER TABLE " + TABLE_COURSE + " ADD COLUMN " + COLUMN_COURSE_POPULARITY + " INTEGER DEFAULT 0");
-            db.execSQL("ALTER TABLE " + TABLE_COURSE + " ADD COLUMN " + COLUMN_COURSE_IS_NEW + " INTEGER DEFAULT 0");
+        if (oldVersion < 5) { // Kiểm tra xem có cần cập nhật dữ liệu không
+            // Xóa dữ liệu cũ (nếu cần)
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_COURSE);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_FLASHCARDSET);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_FLASHCARD);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_DICTIONARY );
+            // Tạo lại bảng và chèn dữ liệu mẫu mới
+            onCreate(db);
         }
-
     }
+
     private void insertDictionaryDataFromAssets(SQLiteDatabase db) throws IOException {
         InputStream is = context.getAssets().open("anhviet109K.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -202,5 +157,96 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
         reader.close();
+    }
+    private void insertSampleCourseData(SQLiteDatabase db) {
+        String[] courseNames = {"Tiếng Anh Giao Tiếp", "Tiếng Anh Thương Mại", "Tiếng Anh Du Lịch",
+                "Tiếng Anh Thi IELTS", "Tiếng Anh Thi TOEIC"};
+        String[] courseDescriptions = {
+                "Nâng cao kỹ năng giao tiếp tiếng Anh hàng ngày.",
+                "Tiếng Anh chuyên ngành kinh doanh và môi trường làm việc.",
+                "Tiếng Anh giao tiếp khi đi du lịch và khám phá thế giới.",
+                "Luyện thi IELTS hiệu quả với các bài học và mẹo làm bài.",
+                "Luyện thi TOEIC đạt điểm cao với các bài tập và chiến lược làm bài."
+        };
+        String[] courseImages = {"lesson", "lesson", "lesson", "lesson4", "lesson5"};
+
+        for (int i = 0; i < courseNames.length; i++) {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_COURSE_NAME, courseNames[i]);
+            values.put(COLUMN_COURSE_DESCRIPTION, courseDescriptions[i]);
+            values.put(COLUMN_COURSE_IMAGE, courseImages[i]);
+            values.put(COLUMN_COURSE_POPULARITY, 80 + i * 5);
+            values.put(COLUMN_COURSE_IS_NEW, i < 3 ? 1 : 0); // Đánh dấu 3 khóa đầu là mới
+            db.insert(TABLE_COURSE, null, values);
+        }
+    }
+
+    private void insertSampleFlashcardSetData(SQLiteDatabase db) {
+        String[][] flashcardSetNames = {
+                {"Từ vựng cơ bản", "Ngữ pháp cơ bản", "Hội thoại giao tiếp"},
+                {"Từ vựng kinh doanh", "Email và thư tín", "Thuyết trình"},
+                {"Từ vựng du lịch", "Hỏi đường và chỉ đường", "Đặt phòng và dịch vụ"},
+                {"Từ vựng IELTS", "Ngữ pháp IELTS", "Bài mẫu IELTS Writing"},
+                {"Từ vựng TOEIC", "Ngữ pháp TOEIC", "Đọc hiểu TOEIC"}
+        };
+
+        int courseId = 1;
+        for (String[] setNames : flashcardSetNames) {
+            for (String setName : setNames) {
+                ContentValues values = new ContentValues();
+                values.put(COLUMN_FLASHCARDSET_NAME, setName);
+                values.put(COLUMN_FLASHCARDSET_COURSE_ID, courseId);
+                db.insert(TABLE_FLASHCARDSET, null, values);
+            }
+            courseId++;
+        }
+    }
+
+    private void insertSampleFlashcardData(SQLiteDatabase db) {
+        String[][][] flashcardData = {
+                { // Tiếng Anh Giao Tiếp
+                        {"hello", "xin chào", "həˈloʊ"},
+                        {"goodbye", "tạm biệt", "ˌɡʊdˈbaɪ"},
+                        {"thank you", "cảm ơn", "θæŋk juː"},
+                        {"please", "làm ơn", "pliːz"}
+                },
+                { // Tiếng Anh Thương Mại
+                        {"meeting", "cuộc họp", "ˈmiːtɪŋ"},
+                        {"contract", "hợp đồng", "ˈkɑːntrækt"},
+                        {"negotiation", "đàm phán", "nɪˌɡoʊʃiˈeɪʃn"},
+                        {"client", "khách hàng", "ˈklaɪənt"}
+                },
+                { // Tiếng Anh Du Lịch
+                        {"hotel", "khách sạn", "hoʊˈtel"},
+                        {"flight", "chuyến bay", "flaɪt"},
+                        {"passport", "hộ chiếu", "ˈpæspɔːrt"},
+                        {"luggage", "hành lý", "ˈlʌɡɪdʒ"}
+                },
+                { // Tiếng Anh Thi IELTS
+                        {"essay", "bài luận", "ˈeseɪ"},
+                        {"vocabulary", "từ vựng", "voʊˈkæbjəleri"},
+                        {"grammar", "ngữ pháp", "ˈɡræmər"},
+                        {"pronunciation", "phát âm", "prəˌnʌnsiˈeɪʃn"}
+                },
+                { // Tiếng Anh Thi TOEIC
+                        {"listening", "nghe", "ˈlɪsənɪŋ"},
+                        {"reading", "đọc", "ˈriːdɪŋ"},
+                        {"part", "phần", "pɑːrt"},
+                        {"score", "điểm số", "skɔːr"}
+                }
+        };
+
+        int flashcardSetId = 1;
+        for (String[][] courseFlashcards : flashcardData) {
+            for (String[] flashcard : courseFlashcards) {
+                ContentValues values = new ContentValues();
+                values.put(COLUMN_FLASHCARD_WORD, flashcard[0]);
+                values.put(COLUMN_FLASHCARD_MEANING, flashcard[1]);
+                values.put(COLUMN_FLASHCARD_PRONUNCIATION, flashcard[2]);
+                values.put(COLUMN_FLASHCARD_SET_ID, flashcardSetId);
+                db.insert(TABLE_FLASHCARD, null, values);
+            }
+            flashcardSetId++;
+        }
     }
 }

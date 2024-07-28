@@ -65,6 +65,6 @@
         android:layout_width="wrap_content"
         android:layout_height="67dp"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_menu" />
 
 </RelativeLayout>
