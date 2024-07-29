@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="61dp"
+        android:layout_height="52dp"
+        android:backgroundTint="@color/lavender"
+        android:paddingBottom="20dp"
+        android:src="@drawable/ic_back" />
+    <EditText
+        android:id="@+id/etWord"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="6dp"
+        android:hint="Từ vựng" />
+
+    <EditText
+        android:id="@+id/etMeaning"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="6dp"
+        android:hint="Nghĩa" />
+
+    <EditText
+        android:id="@+id/etPronunciation"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="6dp"
+        android:hint="Phiên âm (tùy chọn)" />
+
+    <Button
+        android:id="@+id/btnChooseImage"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_marginTop="6dp"
+        android:backgroundTint="@color/pink"
+        android:text="Chọn ảnh (tùy chọn)" />
+
+    <ImageView
+        android:id="@+id/ivFlashcardImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop" />
+
+    <Button
+        android:id="@+id/btnSaveFlashcard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/pink"
+        android:text="Lưu Flashcard" />
+
+</LinearLayout>

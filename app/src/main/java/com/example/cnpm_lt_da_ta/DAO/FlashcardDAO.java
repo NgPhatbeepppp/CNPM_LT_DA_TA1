@@ -101,4 +101,28 @@ public class FlashcardDAO {
     public void deleteFlashcard(int id) {
         db.delete(DatabaseHelper.TABLE_FLASHCARD, DatabaseHelper.COLUMN_FLASHCARD_ID + " = ?", new String[]{String.valueOf(id)});
     }
+    public List<Flashcard> getAllFlashcards() {
+        List<Flashcard> flashcards = new ArrayList<>();
+        Cursor cursor = db.query(
+                DatabaseHelper.TABLE_FLASHCARD,
+                null, // Tất cả các cột
+                null, // Không có mệnh đề where
+                null,
+                null, null, null
+        );
+        while (cursor.moveToNext()) {
+            @SuppressLint("Range") Flashcard flashcard = new Flashcard(
+                    cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_FLASHCARD_ID)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_FLASHCARD_WORD)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_FLASHCARD_MEANING)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_FLASHCARD_PRONUNCIATION)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_FLASHCARD_IMAGE)),
+                    cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_FLASHCARD_SET_ID))
+            );
+            flashcards.add(flashcard);
+        }
+        cursor.close();
+        return flashcards;
+    }
+
 }

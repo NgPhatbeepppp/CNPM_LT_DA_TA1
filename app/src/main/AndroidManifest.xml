@@ -6,12 +6,21 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_book"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CNPM_LT_DA_TA"
         tools:targetApi="31">
+        <activity
+            android:name=".Manager.FlashcardManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Manager.FlashcardCreateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Manager.FlashcardEditActivity"
+            android:exported="false" />
         <activity
             android:name=".User.EditUserActivity"
             android:exported="false" />
@@ -24,8 +33,9 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-        <activity android:name=".Course.CourseDetailActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".Course.CourseDetailActivity"
+            android:exported="false" />
         <activity
             android:name=".Course.FlashcardStudyActivity"
             android:exported="false" />

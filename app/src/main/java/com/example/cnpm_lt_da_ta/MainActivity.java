@@ -39,6 +39,8 @@ import com.example.cnpm_lt_da_ta.Course.Dictionary;
 import com.example.cnpm_lt_da_ta.DAO.CourseDAO;
 import com.example.cnpm_lt_da_ta.DAO.DictionaryDAO;
 import com.example.cnpm_lt_da_ta.Lesson.LessonManagementActivity;
+import com.example.cnpm_lt_da_ta.Manager.FlashcardManagementActivity;
+import com.example.cnpm_lt_da_ta.ManagerAdapter.FlashcardManagementAdapter;
 import com.example.cnpm_lt_da_ta.User.LoginActivity;
 import com.example.cnpm_lt_da_ta.User.UserManagementActivity;
 import com.example.cnpm_lt_da_ta.fragment.HomeFragment;
@@ -269,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if (id == R.id.nav_lesson_management) {
             // Chuyển hướng đến LessonManagementActivity
-            Intent intent = new Intent(MainActivity.this, LessonManagementActivity.class);
+            Intent intent = new Intent(MainActivity.this, FlashcardManagementActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_user_management) {
             // Chuyển hướng đến UserManagementActivity
