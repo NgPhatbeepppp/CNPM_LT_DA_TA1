@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,15 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CNPM_LT_DA_TA"
         tools:targetApi="31">
-        <activity
-            android:name=".Manager.FlashcardManagementActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Manager.FlashcardCreateActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Manager.FlashcardEditActivity"
-            android:exported="false" />
+
         <activity
             android:name=".User.EditUserActivity"
             android:exported="false" />
@@ -30,34 +24,55 @@
         <activity
             android:name=".User.UserManagementActivity"
             android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+
         <activity
             android:name=".Course.CourseDetailActivity"
             android:exported="false" />
         <activity
             android:name=".Course.FlashcardStudyActivity"
             android:exported="false" />
+
         <activity
-            android:name=".Lesson.EditActivity"
+            android:name=".Manager.LearnManagementActivity"
+            android:exported="false"
+            android:label="@string/title_activity_learn_management"
+            android:theme="@style/Theme.CNPM_LT_DA_TA" />
+
+
+        <activity
+            android:name=".Manager.FlashcardCreateActivity"
             android:exported="false" />
         <activity
-            android:name=".Lesson.AddActivity"
+            android:name=".Manager.FlashcardEditActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".Manager.FlashcardSetCreateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Manager.FlashcardSetEditActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".Manager.CourseCreateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Manager.CourseEditActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
         <activity
             android:name=".User.LoginActivity"
             android:exported="true"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Lesson.LessonManagementActivity"
-            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"

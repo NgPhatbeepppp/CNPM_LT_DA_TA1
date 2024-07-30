@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "language_learning.db";
     private static final int DATABASE_VERSION = 5;
     private Context context;
-
+    public static final String TABLE_FLASHCARDSET_FLASHCARD = "flashcard_set_flashcard";
     // Tên các bảng và cột
     public static final String TABLE_COURSE = "course";
     public static final String COLUMN_COURSE_ID = "id";
@@ -83,6 +83,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_DICTIONARY_TYPE + " TEXT, " +
                     COLUMN_DICTIONARY_EXAMPLE + " TEXT" +
                     ")";
+    private static final String CREATE_TABLE_FLASHCARDSET_FLASHCARD =
+            "CREATE TABLE " + TABLE_FLASHCARDSET_FLASHCARD + "("
+                    + COLUMN_FLASHCARDSET_ID + " INTEGER,"
+                    + COLUMN_FLASHCARD_ID + " INTEGER,"
+                    + "PRIMARY KEY (" + COLUMN_FLASHCARDSET_ID + ", " + COLUMN_FLASHCARD_ID + "),"
+                    + "FOREIGN KEY (" + COLUMN_FLASHCARDSET_ID + ") REFERENCES " + TABLE_FLASHCARDSET + "(" + COLUMN_FLASHCARDSET_ID + "),"
+                    + "FOREIGN KEY (" + COLUMN_FLASHCARD_ID + ") REFERENCES " + TABLE_FLASHCARD + "(" + COLUMN_FLASHCARD_ID + ")"
+                    + ")";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -95,7 +103,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_FLASHCARDSET);
         db.execSQL(CREATE_TABLE_FLASHCARD);
         db.execSQL(CREATE_TABLE_DICTIONARY); // Tạo bảng dictionary
-
+        db.execSQL(CREATE_TABLE_FLASHCARDSET_FLASHCARD);
         try {
             insertDictionaryDataFromAssets(db);
         } catch (IOException e) {
@@ -114,7 +122,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_FLASHCARDSET);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_FLASHCARD);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_DICTIONARY );
-            // Tạo lại bảng và chèn dữ liệu mẫu mới
+            db.execSQL(CREATE_TABLE_FLASHCARDSET_FLASHCARD);
             onCreate(db);
         }
     }
@@ -168,7 +176,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "Luyện thi IELTS hiệu quả với các bài học và mẹo làm bài.",
                 "Luyện thi TOEIC đạt điểm cao với các bài tập và chiến lược làm bài."
         };
-        String[] courseImages = {"lesson", "lesson", "lesson", "lesson4", "lesson5"};
+        String[] courseImages = {"lesson", "lesson2", "lesson3", "lesson4", "lesson5"};
 
         for (int i = 0; i < courseNames.length; i++) {
             ContentValues values = new ContentValues();

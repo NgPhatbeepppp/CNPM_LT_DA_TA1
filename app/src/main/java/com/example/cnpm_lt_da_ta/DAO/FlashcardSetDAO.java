@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.cnpm_lt_da_ta.Course.Flashcard;
 import com.example.cnpm_lt_da_ta.DatabaseHelper;
 import com.example.cnpm_lt_da_ta.Course.FlashcardSet;
 
@@ -15,11 +16,15 @@ import java.util.List;
 public class FlashcardSetDAO {
     private SQLiteDatabase db;
     private DatabaseHelper dbHelper;
+    private List<Flashcard> selectedFlashcards;
 
     public FlashcardSetDAO(Context context) {
         dbHelper = new DatabaseHelper(context);
     }
-
+    public FlashcardSetDAO(Context context, List<Flashcard> selectedFlashcards) {
+        this(context);
+        this.selectedFlashcards = selectedFlashcards;
+    }
     public void open() {
         db = dbHelper.getWritableDatabase();
     }
@@ -71,11 +76,27 @@ public class FlashcardSetDAO {
         }
     }
 
-    public void insertFlashcardSet(FlashcardSet flashcardSet) {
+    // Phương thức chèn FlashcardSet với courseId tùy chọn
+    public int insertFlashcardSet(FlashcardSet flashcardSet) {
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.COLUMN_FLASHCARDSET_NAME, flashcardSet.getName());
-        values.put(DatabaseHelper.COLUMN_FLASHCARDSET_COURSE_ID, flashcardSet.getCourseId());
-        db.insert(DatabaseHelper.TABLE_FLASHCARDSET, null, values);
+        if (flashcardSet.getCourseId() != 0) {
+            values.put(DatabaseHelper.COLUMN_FLASHCARDSET_COURSE_ID, flashcardSet.getCourseId());
+        }
+        int newRowId = (int) db.insert(DatabaseHelper.TABLE_FLASHCARDSET, null, values);
+        flashcardSet.setId(newRowId); // Cập nhật ID cho flashcardSet
+
+        // Chèn vào bảng trung gian nếu có selectedFlashcards
+        if (selectedFlashcards != null) {
+            for (Flashcard flashcard : selectedFlashcards) {
+                ContentValues values2 = new ContentValues();
+                values2.put(DatabaseHelper.COLUMN_FLASHCARDSET_ID, newRowId);
+                values2.put(DatabaseHelper.COLUMN_FLASHCARD_ID, flashcard.getId());
+                db.insert(DatabaseHelper.TABLE_FLASHCARDSET_FLASHCARD, null, values2);
+            }
+        }
+
+        return newRowId;
     }
 
     public void updateFlashcardSet(FlashcardSet flashcardSet) {
@@ -85,7 +106,54 @@ public class FlashcardSetDAO {
         db.update(DatabaseHelper.TABLE_FLASHCARDSET, values, DatabaseHelper.COLUMN_FLASHCARDSET_ID + " = ?", new String[]{String.valueOf(flashcardSet.getId())});
     }
 
-    public void deleteFlashcardSet(int id) {
+    public void deleteFlashcardSet(long id) {
         db.delete(DatabaseHelper.TABLE_FLASHCARDSET, DatabaseHelper.COLUMN_FLASHCARDSET_ID + " = ?", new String[]{String.valueOf(id)});
     }
+    public List<FlashcardSet> getAllFlashcardSets() {
+        List<FlashcardSet> flashcardSets = new ArrayList<>();
+        Cursor cursor = db.query(
+                DatabaseHelper.TABLE_FLASHCARDSET,
+                null, // Tất cả các cột
+                null, // Không có mệnh đề WHERE
+                null,
+                null, null, null
+        );
+        while (cursor.moveToNext()) {
+            @SuppressLint("Range") FlashcardSet flashcardSet = new FlashcardSet(
+                    cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_FLASHCARDSET_ID)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_FLASHCARDSET_NAME)),
+                    cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_FLASHCARDSET_COURSE_ID))
+            );
+            flashcardSets.add(flashcardSet);
+        }
+        cursor.close();
+        return flashcardSets;
+    }
+    public List<FlashcardSet> searchFlashcardSets(String query) {
+        List<FlashcardSet> flashcardSets = new ArrayList<>();
+        String selection = DatabaseHelper.COLUMN_FLASHCARDSET_NAME + " LIKE ?";
+        String[] selectionArgs = new String[]{"%" + query + "%"}; // Tìm kiếm theo phần khớp của tên
+
+        Cursor cursor = db.query(
+                DatabaseHelper.TABLE_FLASHCARDSET,
+                null,
+                selection,
+                selectionArgs,
+                null, null, null
+        );
+        while (cursor.moveToNext()) {
+            @SuppressLint("Range") FlashcardSet flashcardSet = new FlashcardSet(
+                    cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_FLASHCARDSET_ID)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_FLASHCARDSET_NAME)),
+                    cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_FLASHCARDSET_COURSE_ID))
+            );
+            flashcardSets.add(flashcardSet);
+        }
+        cursor.close();
+        return flashcardSets;
+    }
+
+
+
+
 }

@@ -13,39 +13,31 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvWord"
+            android:id="@+id/tvFlashcardSetName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Word"
+            android:text="Tên bộ flashcard"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
-
-        <TextView
-            android:id="@+id/tvMeaning"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Meaning"
-            android:textSize="16sp"/>
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/btnEditFlashcard"
+        android:id="@+id/btnEditFlashcardSet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_menu_edit" />
+        android:src="@android:drawable/ic_menu_edit"  />
 
     <ImageView
-        android:id="@+id/btnDeleteFlashcard"
+        android:id="@+id/btnDeleteFlashcardSet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:src="@android:drawable/ic_menu_delete" />
     <CheckBox
-        android:id="@+id/cbFlashcard"
+        android:id="@+id/cbFlashcardSet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp" />
-
+        android:visibility="gone" />
 
 </LinearLayout>

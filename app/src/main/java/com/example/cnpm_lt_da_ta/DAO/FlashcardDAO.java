@@ -124,5 +124,32 @@ public class FlashcardDAO {
         cursor.close();
         return flashcards;
     }
+    public List<Flashcard> searchFlashcards(String query) {
+        List<Flashcard> flashcards = new ArrayList<>();
+        String selection = DatabaseHelper.COLUMN_FLASHCARD_WORD + " LIKE ? OR " +
+                DatabaseHelper.COLUMN_FLASHCARD_MEANING + " LIKE ?";
+        String[] selectionArgs = new String[]{"%" + query + "%", "%" + query + "%"}; // Tìm kiếm theo phần khớp của từ hoặc nghĩa
+
+        Cursor cursor = db.query(
+                DatabaseHelper.TABLE_FLASHCARD,
+                null,
+                selection,
+                selectionArgs,
+                null, null, null
+        );
+        while (cursor.moveToNext()) {
+            @SuppressLint("Range") Flashcard flashcard = new Flashcard(
+                    cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_FLASHCARD_ID)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_FLASHCARD_WORD)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_FLASHCARD_MEANING)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_FLASHCARD_PRONUNCIATION)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_FLASHCARD_IMAGE)),
+                    cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_FLASHCARD_SET_ID))
+            );
+            flashcards.add(flashcard);
+        }
+        cursor.close();
+        return flashcards;
+    }
 
 }

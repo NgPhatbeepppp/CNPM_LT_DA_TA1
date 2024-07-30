@@ -56,8 +56,11 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="0dp"
                     android:layout_height="69dp"
+                    android:layout_margin="6dp"
                     android:layout_weight="1"
                     android:text="Course"
+                    android:shadowRadius="@integer/material_motion_duration_long_1"
+                    android:backgroundTint="@color/lavender"
                     android:textColor="@color/black" />
 
                 <Button
@@ -65,6 +68,9 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="0dp"
                     android:layout_height="69dp"
+                    android:backgroundTint="@color/lavender"
+                    android:shadowRadius="@integer/material_motion_duration_long_1"
+                    android:layout_margin="6dp"
                     android:layout_weight="1"
                     android:text="Dictionary"
                     android:textColor="@color/black" />
@@ -95,7 +101,7 @@
             android:id="@+id/bottomAppBar"
             style="@style/AppBottomAppBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="66dp"
             android:layout_gravity="bottom"
             app:fabAlignmentMode="center"
             app:fabCradleMargin="10dp"

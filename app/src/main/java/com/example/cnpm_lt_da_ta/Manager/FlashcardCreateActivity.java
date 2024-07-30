@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.example.cnpm_lt_da_ta.Course.Flashcard;
@@ -25,6 +26,7 @@ public class FlashcardCreateActivity extends AppCompatActivity {
     private EditText etWord, etMeaning, etPronunciation;
     private ImageView ivFlashcardImage;
     private FlashcardDAO flashcardDAO;
+    private ImageButton btnBack;
     private int flashcardSetId;
     private Uri selectedImageUri; // Lưu trữ Uri của ảnh đã chọn
 
@@ -32,7 +34,7 @@ public class FlashcardCreateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcard_create);
-
+        btnBack = findViewById(R.id.btn_back);
         etWord = findViewById(R.id.etWord);
         etMeaning = findViewById(R.id.etMeaning);
         etPronunciation = findViewById(R.id.etPronunciation);
@@ -45,7 +47,9 @@ public class FlashcardCreateActivity extends AppCompatActivity {
 
         Button btnSaveFlashcard = findViewById(R.id.btnSaveFlashcard);
         btnSaveFlashcard.setOnClickListener(v -> saveFlashcard());
-
+        btnBack.setOnClickListener(v -> {
+            super.finish();
+        });
         Button btnChooseImage = findViewById(R.id.btnChooseImage);
         btnChooseImage.setOnClickListener(v -> openImageChooser());
 

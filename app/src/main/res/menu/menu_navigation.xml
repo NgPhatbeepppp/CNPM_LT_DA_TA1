@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_home"/>
     <item
         android:id="@+id/nav_lesson_management"
-        android:title="Lesson Management"
+        android:title="Learn Management"
         android:icon="@drawable/ic_book" />
 
     <item

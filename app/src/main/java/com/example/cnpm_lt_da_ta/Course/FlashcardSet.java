@@ -3,10 +3,10 @@ package com.example.cnpm_lt_da_ta.Course;
 public class FlashcardSet {
     private int id;
     private String name;
-    private int courseId;
+    private Integer courseId;
 
     // Constructor
-    public FlashcardSet(int id, String name, int courseId) {
+    public FlashcardSet(int id, String name, Integer courseId) {
         this.id = id;
         this.name = name;
         this.courseId = courseId;
