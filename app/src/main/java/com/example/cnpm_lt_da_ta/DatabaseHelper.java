@@ -12,7 +12,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Thông tin cơ sở dữ liệu
     private static final String DATABASE_NAME = "language_learning.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 8;
     private Context context;
     public static final String TABLE_FLASHCARDSET_FLASHCARD = "flashcard_set_flashcard";
     // Tên các bảng và cột
@@ -85,13 +85,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     ")";
     private static final String CREATE_TABLE_FLASHCARDSET_FLASHCARD =
             "CREATE TABLE " + TABLE_FLASHCARDSET_FLASHCARD + "("
-                    + COLUMN_FLASHCARDSET_ID + " INTEGER,"
-                    + COLUMN_FLASHCARD_ID + " INTEGER,"
-                    + "PRIMARY KEY (" + COLUMN_FLASHCARDSET_ID + ", " + COLUMN_FLASHCARD_ID + "),"
-                    + "FOREIGN KEY (" + COLUMN_FLASHCARDSET_ID + ") REFERENCES " + TABLE_FLASHCARDSET + "(" + COLUMN_FLASHCARDSET_ID + "),"
-                    + "FOREIGN KEY (" + COLUMN_FLASHCARD_ID + ") REFERENCES " + TABLE_FLASHCARD + "(" + COLUMN_FLASHCARD_ID + ")"
-                    + ")";
-
+                    + COLUMN_FLASHCARDSET_ID + " INTEGER)";
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
@@ -116,16 +110,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 5) { // Kiểm tra xem có cần cập nhật dữ liệu không
-            // Xóa dữ liệu cũ (nếu cần)
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_COURSE);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_FLASHCARDSET);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_FLASHCARD);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_DICTIONARY );
-            db.execSQL(CREATE_TABLE_FLASHCARDSET_FLASHCARD);
-            onCreate(db);
+        if (oldVersion < 8) { // Giả sử DATABASE_VERSION mới của bạn là 6
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_FLASHCARDSET_FLASHCARD); // Xóa bảng cũ nếu tồn tại
+            onCreate(db); // Tạo lại tất cả các bảng
         }
     }
+
 
     private void insertDictionaryDataFromAssets(SQLiteDatabase db) throws IOException {
         InputStream is = context.getAssets().open("anhviet109K.txt");
