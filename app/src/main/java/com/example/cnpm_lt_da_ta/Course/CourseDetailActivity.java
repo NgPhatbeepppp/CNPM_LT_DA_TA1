@@ -4,6 +4,7 @@ import static android.content.Intent.getIntent;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,14 +48,24 @@ public class CourseDetailActivity extends AppCompatActivity {
 
         int courseId = getIntent().getIntExtra("courseId", -1);
         if (courseId != -1) {
+
             Course course = courseDAO.getCourseById(courseId);
             if (course != null) {
                 tvCourseName.setText(course.getName());
                 tvCourseDescription.setText(course.getDescription());
                 try {
-                    Glide.with(this).load(course.getImage()).into(ivCourseImage);
+                    if (course.getImage() != null && !course.getImage().isEmpty()) {
+                        Glide.with(this)
+                                .load(course.getImage())
+                                .into(ivCourseImage);
+                    } else {
+                        // Nếu đường dẫn ảnh trống, hiển thị ảnh mặc định
+                        ivCourseImage.setImageResource(R.drawable.lesson);
+                        Log.e("CourseDetailActivity", "Image URL is null or empty");
+                    }
                 } catch (Exception e) {
-                    // Xử lý lỗi tải ảnh ở đây (ví dụ: hiển thị ảnh mặc định)
+                    Log.e("CourseDetailActivity", "Error loading image: ", e);
+
                     ivCourseImage.setImageResource(R.drawable.lesson);
                 }
             }
