@@ -1,7 +1,11 @@
 package com.example.cnpm_lt_da_ta.Course;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,7 +58,10 @@ public class FlashcardStudyActivity extends AppCompatActivity {
         });
         btnNext.setOnClickListener(v -> {
             int currentItem = viewPagerFlashcards.getCurrentItem();
-            if (currentItem < flashcardAdapter.getItemCount() - 1) {
+            if (currentItem == flashcardAdapter.getItemCount() - 1) {
+                // Call showSuccessMessage() when it's the last flashcard
+                showSuccessMessage();
+            } else if (currentItem < flashcardAdapter.getItemCount() - 1) {
                 viewPagerFlashcards.setCurrentItem(currentItem + 1);
             }
         });
@@ -68,6 +75,39 @@ public class FlashcardStudyActivity extends AppCompatActivity {
                 ((FlashcardFragment) currentFragment).flipCard();
             }
         });
+    }
+    private void showSuccessMessage() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.layout_flashcard_success, null);
+        builder.setView(dialogView);
+
+        Button btnContinue = dialogView.findViewById(R.id.btnContinue);
+        Button btnExit = dialogView.findViewById(R.id.btnExit);
+        TextView tvSuccessMessage = dialogView.findViewById(R.id.tvSuccessMessage);
+        tvSuccessMessage.setText("Congratulations! You have completed the flashcard set!");
+
+        AlertDialog dialog = builder.create();
+
+        btnContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle "Continue" button click (e.g., reset the flashcard set)
+                viewPagerFlashcards.setCurrentItem(0);
+                dialog.dismiss();
+            }
+        });
+
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle "Exit" button click (e.g., go back to the previous activity)
+                finish();
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     @Override

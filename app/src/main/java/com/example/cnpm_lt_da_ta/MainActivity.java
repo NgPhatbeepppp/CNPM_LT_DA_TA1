@@ -355,6 +355,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (dataSnapshot.exists()) {
                     String name = dataSnapshot.getValue(String.class);
                     nameTextView.setText(name);
+                    String email = user.getEmail();
+                    emailTextView.setText(email);
 
                 } else {
                     nameTextView.setText("Chưa có tên"); // Hoặc giá trị mặc định khác
