@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/old_standard_tt"
-        android:text="@string/sign_in"
+        android:text="Đăng Nhập"
         android:textColor="@color/textHeading"
         android:textSize="34sp"
         android:textStyle="bold"
@@ -55,6 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintWidth_percent=".8" />
 
+
     <EditText
         android:id="@+id/edt_password"
         android:layout_width="0dp"
@@ -72,6 +73,32 @@
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintWidth_percent=".8" />
 
+    <CheckBox
+        android:id="@+id/chkRememberMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="Ghi nhớ đăng nhập"
+        android:textColor="@color/textHeading"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edt_password" />
+
+    <TextView
+        android:id="@+id/tv_forgot_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="Quên mật khẩu?"
+        android:textColor="@color/pink"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/chkRememberMe"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/chkRememberMe"
+        app:layout_constraintVertical_bias="0.538" />
+
     <Button
         android:id="@+id/button"
         android:layout_width="0dp"
@@ -85,7 +112,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_password"
-        app:layout_constraintVertical_bias="0.124"
+        app:layout_constraintVertical_bias="0.21"
         app:layout_constraintWidth_percent=".4" />
 
 

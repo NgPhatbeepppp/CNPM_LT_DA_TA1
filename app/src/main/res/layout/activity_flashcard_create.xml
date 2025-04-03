@@ -1,58 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <!-- Nút quay lại -->
     <ImageButton
         android:id="@+id/btn_back"
         android:layout_width="61dp"
         android:layout_height="52dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/lavender"
         android:paddingBottom="20dp"
         android:src="@drawable/ic_back" />
-    <EditText
-        android:id="@+id/etWord"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="6dp"
-        android:hint="Từ vựng" />
 
-    <EditText
-        android:id="@+id/etMeaning"
+    <!-- Hộp nhập từ vựng -->
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="6dp"
-        android:hint="Nghĩa" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        android:backgroundTint="@android:color/white">
 
-    <EditText
-        android:id="@+id/etPronunciation"
+        <EditText
+            android:id="@+id/etWord"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_margin="12dp"
+            android:hint="Từ vựng"
+            android:textColor="@android:color/black"
+            android:backgroundTint="@android:color/white" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Hộp nhập nghĩa -->
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="6dp"
-        android:hint="Phiên âm (tùy chọn)" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        android:backgroundTint="@android:color/white">
 
+        <EditText
+            android:id="@+id/etMeaning"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_margin="12dp"
+            android:hint="Nghĩa"
+            android:textColor="@android:color/black"
+            android:backgroundTint="@android:color/white" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Hộp nhập phiên âm -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        android:backgroundTint="@android:color/white">
+
+        <EditText
+            android:id="@+id/etPronunciation"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_margin="12dp"
+            android:hint="Phiên âm (tùy chọn)"
+            android:textColor="@android:color/black"
+            android:backgroundTint="@android:color/white" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Nút chọn ảnh -->
     <Button
         android:id="@+id/btnChooseImage"
         android:layout_width="wrap_content"
         android:layout_height="55dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"
         android:backgroundTint="@color/pink"
         android:text="Chọn ảnh (tùy chọn)" />
 
+    <!-- Hiển thị ảnh flashcard -->
     <ImageView
         android:id="@+id/ivFlashcardImage"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:scaleType="centerCrop" />
 
+    <!-- Nút lưu flashcard -->
     <Button
         android:id="@+id/btnSaveFlashcard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_gravity="center_horizontal"
         android:backgroundTint="@color/pink"
         android:text="Lưu Flashcard" />
-
 </LinearLayout>

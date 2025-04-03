@@ -1,4 +1,4 @@
-package com.example.cnpm_lt_da_ta.Course;
+package com.example.cnpm_lt_da_ta.model;
 
 public class Course {
     private int id;

@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cnpm_lt_da_ta.DAO.FlashcardSetDAO;
 import com.example.cnpm_lt_da_ta.Manager.FlashcardSetEditActivity;
-import com.example.cnpm_lt_da_ta.Course.FlashcardSet;
+import com.example.cnpm_lt_da_ta.model.FlashcardSet;
 import com.example.cnpm_lt_da_ta.R;
 
 import java.util.ArrayList;

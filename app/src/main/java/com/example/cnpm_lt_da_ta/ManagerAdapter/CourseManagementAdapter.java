@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cnpm_lt_da_ta.DAO.CourseDAO;
 import com.example.cnpm_lt_da_ta.Manager.CourseEditActivity;
-import com.example.cnpm_lt_da_ta.Course.Course;
+import com.example.cnpm_lt_da_ta.model.Course;
 import com.example.cnpm_lt_da_ta.R;
 
 import java.util.ArrayList;

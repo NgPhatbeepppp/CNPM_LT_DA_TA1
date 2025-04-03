@@ -6,9 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.cnpm_lt_da_ta.Course.Flashcard;
+import com.example.cnpm_lt_da_ta.model.Flashcard;
 import com.example.cnpm_lt_da_ta.fragment.FlashcardFragment;
-import com.example.cnpm_lt_da_ta.Course.FlashcardStudyActivity; // Import FlashcardStudyActivity
+import com.example.cnpm_lt_da_ta.model.FlashcardStudyActivity; // Import FlashcardStudyActivity
 
 import java.util.List;
 

@@ -1,59 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="26dp">
+    android:padding="24dp"
+    android:background="@color/white">
 
+    <!-- Nút Quay Lại -->
     <ImageButton
         android:id="@+id/btn_back"
-        android:layout_width="61dp"
-        android:layout_height="42dp"
-        android:backgroundTint="@color/lavender"
-        android:paddingBottom="20dp"
-        android:src="@drawable/ic_back" />
-    <EditText
-        android:id="@+id/edit_text_name"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="6dp"
-        android:hint="Tên"
-        android:inputType="textPersonName" />
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_back"
+        app:tint="@color/black" />
 
-    <EditText
-        android:id="@+id/edit_text_email"
+    <!-- Khung chứa toàn bộ form -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_container"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingTop="6dp"
-        android:layout_marginTop="6dp"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
-
-    <EditText
-        android:id="@+id/edit_text_phone_number"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Số điện thoại"
-        android:paddingTop="6dp"
-        android:layout_marginTop="6dp"
-        android:inputType="phone" />
-
-    <EditText
-        android:id="@+id/edit_text_password"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Mật khẩu mới"
-        android:paddingTop="6dp"
-        android:layout_marginTop="6dp"
-        android:inputType="textPassword" />
-
-    <Button
-        android:id="@+id/button_save"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        android:backgroundTint="@color/pink"
-        android:text="Lưu" />
+        android:layout_marginTop="100dp"
+        android:layout_marginHorizontal="16dp"
+        android:padding="32dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
+        android:layout_centerInParent="true"
+        android:background="@color/white">
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <!-- Tiêu đề -->
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chỉnh sửa thông tin"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"/>
+
+            <!-- Hộp nhập Tên -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="4dp"
+                android:layout_marginBottom="16dp">
+
+                <EditText
+                    android:id="@+id/edit_text_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:paddingHorizontal="18dp"
+                    android:hint="Tên"
+                    android:background="@android:color/transparent"
+                    android:inputType="textPersonName" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- Hộp nhập Email -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="4dp"
+                android:layout_marginBottom="16dp">
+
+                <EditText
+                    android:id="@+id/edit_text_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:paddingHorizontal="18dp"
+                    android:hint="Email"
+                    android:background="@android:color/transparent"
+                    android:inputType="textEmailAddress" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- Hộp nhập Số điện thoại -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="4dp"
+                android:layout_marginBottom="16dp">
+
+                <EditText
+                    android:id="@+id/edit_text_phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:paddingHorizontal="18dp"
+                    android:hint="Số điện thoại"
+                    android:background="@android:color/transparent"
+                    android:inputType="phone" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- Hộp nhập Mật khẩu mới -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="4dp">
+
+                <EditText
+                    android:id="@+id/edit_text_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:paddingHorizontal="18dp"
+                    android:hint="Mật khẩu mới"
+                    android:background="@android:color/transparent"
+                    android:inputType="textPassword" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- Nút Lưu -->
+            <Button
+                android:id="@+id/button_save"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="28dp"
+                android:backgroundTint="@color/pink"
+                android:text="Lưu"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

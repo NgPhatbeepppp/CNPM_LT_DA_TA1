@@ -1,8 +1,5 @@
-package com.example.cnpm_lt_da_ta.Course;
+package com.example.cnpm_lt_da_ta.model;
 
-import static android.content.Intent.getIntent;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;

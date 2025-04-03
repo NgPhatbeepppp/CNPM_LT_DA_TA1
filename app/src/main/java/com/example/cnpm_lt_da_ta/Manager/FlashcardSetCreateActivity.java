@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cnpm_lt_da_ta.Course.Flashcard;
-import com.example.cnpm_lt_da_ta.Course.FlashcardSet;
+import com.example.cnpm_lt_da_ta.model.Flashcard;
+import com.example.cnpm_lt_da_ta.model.FlashcardSet;
 import com.example.cnpm_lt_da_ta.DAO.FlashcardDAO;
 import com.example.cnpm_lt_da_ta.DAO.FlashcardSetDAO;
 import com.example.cnpm_lt_da_ta.ManagerAdapter.FlashcardManagementAdapter;
@@ -18,6 +18,8 @@ import com.example.cnpm_lt_da_ta.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.os.Handler;
+import android.os.Looper;
 
 public class FlashcardSetCreateActivity extends AppCompatActivity {
 
@@ -56,17 +58,28 @@ public class FlashcardSetCreateActivity extends AppCompatActivity {
         flashcardAdapter.setSelectionMode(true);
 
         // Thiết lập OnItemClickListener để theo dõi các flashcard được chọn
+        final Handler handler = new Handler(Looper.getMainLooper());
+
         flashcardAdapter.setOnItemClickListener(flashcard -> {
-            if (selectedFlashcards.contains(flashcard)) {
-                selectedFlashcards.remove(flashcard);
-            } else {
-                selectedFlashcards.add(flashcard);
+            int index = flashcardAdapter.getFlashcardList().indexOf(flashcard);
+
+            if (index != -1) {
+                if (selectedFlashcards.contains(flashcard)) {
+                    selectedFlashcards.remove(flashcard);
+                } else {
+                    selectedFlashcards.add(flashcard);
+                }
+
+                // Dùng Handler để trì hoãn cập nhật giao diện tránh lỗi IllegalStateException
+                handler.post(() -> flashcardAdapter.notifyItemChanged(index));
             }
-            flashcardAdapter.notifyDataSetChanged();
         });
 
-        rvFlashcards.setAdapter(flashcardAdapter);
+        rvFlashcards.setAdapter(flashcardAdapter); // ✅ Đặt ngoài setOnItemClickListener()
     }
+
+
+
 
     private void saveFlashcardSet() {
         String name = etFlashcardSetName.getText().toString().trim();

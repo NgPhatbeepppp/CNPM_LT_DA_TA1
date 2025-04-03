@@ -10,33 +10,46 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/ivCourseImage"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/default_image" />
-
-        <TextView
-            android:id="@+id/tvCourseName"
-            android:layout_width="match_parent"
+        <!-- Đặt marginRight cho ImageView -->
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Tên khóa học"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvCourseDescription"
-            android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/ivCourseImage"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_image"
+                android:layout_marginRight="12dp" /> <!-- Tạo khoảng cách phải cho ảnh -->
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Mô tả khóa học" />
+            android:layout_weight="1"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tvCourseName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tên khóa học"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvCourseDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mô tả khóa học"
+                android:layout_marginTop="12dp" /> <!-- Tạo khoảng cách giữa tên và mô tả -->
+        </LinearLayout>
 
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

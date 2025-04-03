@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cnpm_lt_da_ta.Course.Dictionary; // Import lớp Dictionary
+import com.example.cnpm_lt_da_ta.model.Dictionary; // Import lớp Dictionary
 import com.example.cnpm_lt_da_ta.R;
 
 import java.util.List;

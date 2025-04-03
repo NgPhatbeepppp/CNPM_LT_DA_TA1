@@ -10,9 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cnpm_lt_da_ta.Course.CourseDetailActivity;
-import com.example.cnpm_lt_da_ta.Course.FlashcardSet;
-import com.example.cnpm_lt_da_ta.Course.FlashcardStudyActivity;
+import com.example.cnpm_lt_da_ta.model.FlashcardSet;
+import com.example.cnpm_lt_da_ta.model.FlashcardStudyActivity;
 import com.example.cnpm_lt_da_ta.DAO.FlashcardDAO;
 import com.example.cnpm_lt_da_ta.R;
 

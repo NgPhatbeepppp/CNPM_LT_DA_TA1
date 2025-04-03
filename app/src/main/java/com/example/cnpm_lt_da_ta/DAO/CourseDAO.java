@@ -1,15 +1,14 @@
-
 package com.example.cnpm_lt_da_ta.DAO;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.cnpm_lt_da_ta.Course.Course;
-import com.example.cnpm_lt_da_ta.Course.CourseDetailActivity;
+import com.example.cnpm_lt_da_ta.model.Course;
 import com.example.cnpm_lt_da_ta.DatabaseHelper;
 
 import java.util.ArrayList;
@@ -19,13 +18,11 @@ public class CourseDAO {
     private SQLiteDatabase db;
     private DatabaseHelper dbHelper;
 
-
     public CourseDAO(Context context) {
         dbHelper = new DatabaseHelper(context);
     }
 
-
-    public void open() {
+    public void open() throws SQLException {
         db = dbHelper.getWritableDatabase();
     }
 
@@ -35,6 +32,8 @@ public class CourseDAO {
 
     public List<Course> getAllCourses() {
         List<Course> courses = new ArrayList<>();
+        open();  // Đảm bảo database đã mở
+
         Cursor cursor = db.query(DatabaseHelper.TABLE_COURSE, null, null, null, null, null, null);
         while (cursor.moveToNext()) {
             @SuppressLint("Range") Course course = new Course(
@@ -43,17 +42,17 @@ public class CourseDAO {
                     cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_COURSE_DESCRIPTION)),
                     cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_COURSE_IMAGE)),
                     cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_COURSE_POPULARITY)),
-                    cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_COURSE_IS_NEW)));
-            Log.d("CourseDAO", "Cursor count: " + cursor.getCount());
-            Log.d("CourseDAO", "Course: " + course.toString());
+                    cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_COURSE_IS_NEW))
+            );
             courses.add(course);
         }
         cursor.close();
-        Log.d("CourseDAO", "getAllCourses - Returning courses: " + courses.size());
+        close();  // Đóng database sau khi truy vấn xong
         return courses;
     }
 
     public Course getCourseById(int id) {
+        open();  // Đảm bảo database đã mở
         Cursor cursor = db.query(DatabaseHelper.TABLE_COURSE, null, DatabaseHelper.COLUMN_COURSE_ID + " = ?", new String[]{String.valueOf(id)}, null, null, null);
         if (cursor.moveToFirst()) {
             @SuppressLint("Range") Course course = new Course(
@@ -65,50 +64,89 @@ public class CourseDAO {
                     cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_COURSE_IS_NEW))
             );
             cursor.close();
+            close();  // Đóng database sau khi lấy dữ liệu
             return course;
         } else {
             cursor.close();
+            close();
             return null;
         }
     }
 
-    public void insertCourse(Course course) {
+    public long insertCourse(Course course) {  // Chỉnh sửa void -> long để kiểm tra ID chèn
+        open();
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.COLUMN_COURSE_NAME, course.getName());
         values.put(DatabaseHelper.COLUMN_COURSE_DESCRIPTION, course.getDescription());
         values.put(DatabaseHelper.COLUMN_COURSE_IMAGE, course.getImage());
         values.put(DatabaseHelper.COLUMN_COURSE_POPULARITY, course.getPopularity());
         values.put(DatabaseHelper.COLUMN_COURSE_IS_NEW, course.getIsNew());
-        db.insert(DatabaseHelper.TABLE_COURSE, null, values);
+
+        long result = db.insert(DatabaseHelper.TABLE_COURSE, null, values);
+        if (result != -1) {
+            addNews("Khóa học mới: " + course.getName());
+        }
+
+        close();
+        return result;
     }
+
+    private void addNews(String message) {
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.COLUMN_NEWS_MESSAGE, message);
+        values.put(DatabaseHelper.COLUMN_NEWS_TIMESTAMP, System.currentTimeMillis());
+
+        db.insert(DatabaseHelper.TABLE_NEWS, null, values);
+    }
+
     public void updateCourse(Course course) {
+        open();
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.COLUMN_COURSE_NAME, course.getName());
         values.put(DatabaseHelper.COLUMN_COURSE_DESCRIPTION, course.getDescription());
         values.put(DatabaseHelper.COLUMN_COURSE_IMAGE, course.getImage());
         values.put(DatabaseHelper.COLUMN_COURSE_POPULARITY, course.getPopularity());
         values.put(DatabaseHelper.COLUMN_COURSE_IS_NEW, course.getIsNew());
+
         db.update(DatabaseHelper.TABLE_COURSE, values, DatabaseHelper.COLUMN_COURSE_ID + " = ?", new String[]{String.valueOf(course.getId())});
+        close();
     }
+    public long addCourse(Course course) {
+        open(); // Mở database trước khi thao tác
+
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.COLUMN_COURSE_NAME, course.getName());
+        values.put(DatabaseHelper.COLUMN_COURSE_DESCRIPTION, course.getDescription());
+        values.put(DatabaseHelper.COLUMN_COURSE_IMAGE, course.getImage());
+        values.put(DatabaseHelper.COLUMN_COURSE_POPULARITY, course.getPopularity());
+        values.put(DatabaseHelper.COLUMN_COURSE_IS_NEW, course.getIsNew());
+
+        long result = db.insert(DatabaseHelper.TABLE_COURSE, null, values);
+
+        if (result == -1) {
+            Log.e("SQLite", "Lỗi khi thêm khóa học vào database");
+        } else {
+            Log.d("SQLite", "Thêm khóa học thành công, ID: " + result);
+        }
+
+        close(); // Đóng database sau khi thao tác xong
+        return result;
+    }
+
     public void deleteCourse(int id) {
+        open();
         db.delete(DatabaseHelper.TABLE_COURSE, DatabaseHelper.COLUMN_COURSE_ID + " = ?", new String[]{String.valueOf(id)});
+        close();
     }
+
     public List<Course> searchCourses(String query) {
         List<Course> courses = new ArrayList<>();
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        open();
 
         String selection = DatabaseHelper.COLUMN_COURSE_NAME + " LIKE ?";
         String[] selectionArgs = new String[]{"%" + query + "%"};
 
-        Cursor cursor = db.query(
-                DatabaseHelper.TABLE_COURSE,
-                null, // Hoặc bạn có thể chỉ định các cột cụ thể cần lấy
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-        );
+        Cursor cursor = db.query(DatabaseHelper.TABLE_COURSE, null, selection, selectionArgs, null, null, null);
 
         while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_COURSE_ID));
@@ -116,15 +154,13 @@ public class CourseDAO {
             String description = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_COURSE_DESCRIPTION));
             String image = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_COURSE_IMAGE));
             int popularity = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_COURSE_POPULARITY));
-            boolean isNewFromDatabase = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_COURSE_IS_NEW)) == 1;
-            int isNew = isNewFromDatabase ? 1 : 0; // Chuyển boolean thành int (1 hoặc 0)(DatabaseHelper.COLUMN_COURSE_IS_NEW)) == 1;
+            int isNew = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_COURSE_IS_NEW));
 
-            Course course = new Course(id, name, description, image, popularity, isNew);
-            courses.add(course);
+            courses.add(new Course(id, name, description, image, popularity, isNew));
         }
 
         cursor.close();
+        close();
         return courses;
     }
 }
-

@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cnpm_lt_da_ta.Course.Course;
-import com.example.cnpm_lt_da_ta.Course.FlashcardSet;
+import com.example.cnpm_lt_da_ta.model.Course;
+import com.example.cnpm_lt_da_ta.model.FlashcardSet;
 import com.example.cnpm_lt_da_ta.DAO.CourseDAO;
 import com.example.cnpm_lt_da_ta.DAO.FlashcardSetDAO;
 import com.example.cnpm_lt_da_ta.ManagerAdapter.FlashcardSetManagementAdapter;
@@ -36,7 +36,7 @@ public class CourseEditActivity extends AppCompatActivity {
 
         etCourseName = findViewById(R.id.etCourseName);
         etCourseDescription = findViewById(R.id.etCourseDescription);
-        etCourseImage = findViewById(R.id.etCourseImage);
+
         rvFlashcardSets = findViewById(R.id.rvFlashcardSets);
         rvFlashcardSets.setLayoutManager(new LinearLayoutManager(this));
 

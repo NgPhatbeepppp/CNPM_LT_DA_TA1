@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.cnpm_lt_da_ta.R;
+import com.example.cnpm_lt_da_ta.User.EditProfileActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,6 +46,7 @@ public class MyProfileFragment extends Fragment {
     private Button btnChooseImage;
     private DatabaseReference userRef;
     private Uri imageUri;
+    private static final int REQUEST_EDIT_PROFILE = 100;
     private static final int PICK_IMAGE_REQUEST = 1;
 
     @Nullable
@@ -96,7 +98,11 @@ public class MyProfileFragment extends Fragment {
             });
         }
 
-        btnUpdateProfile.setOnClickListener(v -> updateProfile());
+        btnUpdateProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+            startActivityForResult(intent, REQUEST_EDIT_PROFILE);
+        });
+
         btnChooseImage.setOnClickListener(v -> openFileChooser());
     }
 
@@ -109,11 +115,43 @@ public class MyProfileFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
-            imageUri = data.getData();
-            Picasso.get().load(imageUri).into(imageAvatar);
+        if (requestCode == REQUEST_EDIT_PROFILE && resultCode == Activity.RESULT_OK) {
+            // Nếu có thay đổi, reload dữ liệu
+            loadUserData();
         }
     }
+
+    private void loadUserData() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String userId = user.getUid();
+            userRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String fullName = snapshot.child("name").getValue(String.class);
+                        String phone = snapshot.child("phone").getValue(String.class);
+                        String avatarUrl = snapshot.child("avatar").getValue(String.class);
+
+                        edtFullName.setText(fullName);
+                        edtPhone.setText(phone);
+
+                        if (avatarUrl != null) {
+                            Glide.with(requireContext()).load(avatarUrl).error(R.drawable.default_user).into(imageAvatar);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.e("MyProfileFragment", "Lỗi khi đọc dữ liệu user", error.toException());
+                }
+            });
+        }
+    }
+
 
     private void updateProfile() {
         String fullName = edtFullName.getText().toString().trim();

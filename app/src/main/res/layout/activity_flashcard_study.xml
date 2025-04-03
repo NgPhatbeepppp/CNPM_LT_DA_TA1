@@ -3,43 +3,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- ViewPager2 chiếm toàn bộ không gian trừ bottom bar -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPagerFlashcards"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottomBar" />
+        android:layout_height="0dp"
+        android:layout_above="@id/bottomBar"
+        android:layout_alignParentTop="true" />
 
+    <!-- Bottom Bar với các nút điều hướng -->
     <LinearLayout
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="8dp"
+        android:background="@drawable/bg_flashcard"
+        android:gravity="center">
 
+        <!-- Nút "Trước" -->
         <Button
             android:id="@+id/btnPrevious"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/pink"
-            android:text="Trước" />
+            android:text="Trước"
+            android:textColor="@android:color/white"
+            android:layout_marginEnd="8dp"
+            android:layout_gravity="center"/>
 
+        <!-- Nút "Lật" -->
         <Button
             android:id="@+id/btnFlip"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/pink"
-            android:text="Lật" />
+            android:text="Lật"
+            android:textColor="@android:color/white"
+            android:layout_marginEnd="8dp"
+            android:layout_gravity="center"/>
 
+        <!-- Nút "Sau" -->
         <Button
             android:id="@+id/btnNext"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/pink"
-            android:text="Sau" />
+            android:text="Sau"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center"/>
+
     </LinearLayout>
 
 </RelativeLayout>

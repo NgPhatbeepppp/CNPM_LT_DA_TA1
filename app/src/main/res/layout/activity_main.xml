@@ -15,7 +15,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/white">
 
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appBarLayout"
@@ -26,22 +27,25 @@
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@color/blue"
+                    android:layout_height="56dp"
+                    android:background="?attr/colorPrimary"
+                    app:titleTextColor="@android:color/white"
                     app:popupTheme="@style/Theme.AppCompat.Light" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="8dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/searchEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Tìm kiếm"
+                        android:hint="🔍 Tìm kiếm..."
                         android:inputType="text"
                         android:textColor="@color/black"
-                        android:textColorHint="@color/pink"/>
+                        android:textColorHint="@color/gray"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -49,17 +53,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:padding="8dp"
                 android:weightSum="2">
 
                 <Button
                     android:id="@+id/btnCourse"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="0dp"
-                    android:layout_height="69dp"
-                    android:layout_margin="6dp"
+                    android:layout_height="54dp"
+                    android:layout_margin="4dp"
                     android:layout_weight="1"
-                    android:text="Course"
-                    android:shadowRadius="@integer/material_motion_duration_long_1"
+                    android:text="📚 Khóa học"
                     android:backgroundTint="@color/lavender"
                     android:textColor="@color/black" />
 
@@ -67,12 +71,11 @@
                     android:id="@+id/btnDictionary"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="0dp"
-                    android:layout_height="69dp"
-                    android:backgroundTint="@color/lavender"
-                    android:shadowRadius="@integer/material_motion_duration_long_1"
-                    android:layout_margin="6dp"
+                    android:layout_height="54dp"
+                    android:layout_margin="4dp"
                     android:layout_weight="1"
-                    android:text="Dictionary"
+                    android:text="📖 Từ điển"
+                    android:backgroundTint="@color/lavender"
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -104,18 +107,20 @@
             android:layout_height="66dp"
             android:layout_gravity="bottom"
             app:fabAlignmentMode="center"
-            app:fabCradleMargin="10dp"
-            app:fabCradleRoundedCornerRadius="50dp" />
+            app:fabCradleMargin="8dp"
+            app:fabCradleRoundedCornerRadius="50dp"
+            app:backgroundTint="@color/white" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
-            android:layout_width="wrap_content"
-            android:layout_height="69dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@android:color/transparent"
             app:labelVisibilityMode="labeled"
-            app:layout_anchor="@id/bottomAppBar"
-            app:menu="@menu/bottom_menu" />
+            app:menu="@menu/bottom_menu"
+            app:itemIconTint="@color/gray"
+            app:itemTextColor="@color/black"
+            android:background="@android:color/transparent"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -125,6 +130,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         app:headerLayout="@layout/layout_header_nav"
-        app:menu="@menu/menu_navigation" />
+        app:menu="@menu/menu_navigation"
+        android:background="@color/white"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

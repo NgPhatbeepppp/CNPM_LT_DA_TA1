@@ -33,9 +33,9 @@ import java.util.List;
 
 import com.bumptech.glide.Glide;
 import com.example.cnpm_lt_da_ta.Adapter.DictionaryAdapter;
-import com.example.cnpm_lt_da_ta.Course.Course;
+import com.example.cnpm_lt_da_ta.model.Course;
 import com.example.cnpm_lt_da_ta.Adapter.CourseAdapter;
-import com.example.cnpm_lt_da_ta.Course.Dictionary;
+import com.example.cnpm_lt_da_ta.model.Dictionary;
 import com.example.cnpm_lt_da_ta.DAO.CourseDAO;
 import com.example.cnpm_lt_da_ta.DAO.DictionaryDAO;
 import com.example.cnpm_lt_da_ta.Manager.LearnManagementActivity;

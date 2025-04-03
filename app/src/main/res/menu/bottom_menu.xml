@@ -4,25 +4,22 @@
 
     <item
         android:id="@+id/back"
-        android:title="Back"
+        android:title="Quay lại"
         android:icon="@drawable/ic_back"/>
 
     <item
         android:id="@+id/home"
-        android:title="Home"
-        android:icon="@drawable/ic_home"
-        />
-
-    <item
-        android:title=""/>
+        android:title="Trang chủ"
+        android:icon="@drawable/ic_home"/>
 
     <item
         android:id="@+id/news"
-        android:title="News"
+        android:title="Thông báo"
         android:icon="@drawable/bell" />
+
     <item
         android:id="@+id/user"
-        android:title="Profile"
+        android:title="Hồ sơ"
         android:icon="@drawable/ic_user" />
 
 </menu>

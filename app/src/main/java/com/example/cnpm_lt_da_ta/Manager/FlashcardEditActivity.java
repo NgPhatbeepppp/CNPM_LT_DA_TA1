@@ -15,7 +15,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cnpm_lt_da_ta.Course.Flashcard;
+import com.example.cnpm_lt_da_ta.model.Flashcard;
 import com.example.cnpm_lt_da_ta.DAO.FlashcardDAO;
 import com.example.cnpm_lt_da_ta.R;
 

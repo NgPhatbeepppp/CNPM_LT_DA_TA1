@@ -1,40 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_margin="16dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    android:backgroundTint="@android:color/white">
 
-    <TextView
-        android:id="@+id/tvWord"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Word"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@android:color/white">
 
-    <TextView
-        android:id="@+id/tvPronunciation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="/prəˌnʌnsiˈeɪʃən/" />
+        <!-- Từ vựng (Nổi bật) -->
+        <TextView
+            android:id="@+id/tvWord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Word"
+            android:textSize="24sp"
+            android:textStyle="bold|italic"
+            android:textColor="@android:color/holo_blue_dark"
+            android:padding="12dp" />
 
-    <TextView
-        android:id="@+id/tvMeaning"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Meaning" />
+        <!-- Phiên âm -->
+        <TextView
+            android:id="@+id/tvPronunciation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="/prəˌnʌnsiˈeɪʃən/"
+            android:textSize="18sp"
+            android:textColor="@android:color/darker_gray"
+            android:padding="12dp" />
 
-    <TextView
-        android:id="@+id/tvType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Type: noun" />
+        <!-- Nghĩa -->
+        <TextView
+            android:id="@+id/tvMeaning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Meaning"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:padding="12dp" />
 
-    <TextView
-        android:id="@+id/tvExample"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Example: This is an example sentence." />
+        <!-- Loại từ -->
+        <TextView
+            android:id="@+id/tvType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Type: noun"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:padding="12dp" />
 
-</LinearLayout>
+        <!-- Ví dụ -->
+        <TextView
+            android:id="@+id/tvExample"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Example: This is an example sentence."
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:padding="12dp" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

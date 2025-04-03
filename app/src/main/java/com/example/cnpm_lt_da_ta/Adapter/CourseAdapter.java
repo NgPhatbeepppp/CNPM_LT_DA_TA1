@@ -13,9 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.cnpm_lt_da_ta.Course.Course;
-import com.example.cnpm_lt_da_ta.Course.CourseDetailActivity;
-import com.example.cnpm_lt_da_ta.Course.Dictionary;
+import com.example.cnpm_lt_da_ta.model.Course;
+import com.example.cnpm_lt_da_ta.model.CourseDetailActivity;
 import com.example.cnpm_lt_da_ta.R;
 
 import java.util.List;

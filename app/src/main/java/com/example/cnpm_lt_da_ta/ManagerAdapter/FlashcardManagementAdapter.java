@@ -16,7 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cnpm_lt_da_ta.Course.Flashcard;
+import com.example.cnpm_lt_da_ta.model.Flashcard;
 import com.example.cnpm_lt_da_ta.DAO.FlashcardDAO;
 import com.example.cnpm_lt_da_ta.Manager.FlashcardEditActivity;
 import com.example.cnpm_lt_da_ta.R;
@@ -131,6 +131,10 @@ public class FlashcardManagementAdapter extends RecyclerView.Adapter<FlashcardMa
                 notifyDataSetChanged();
             }
         };
+    }
+
+    public List<Flashcard> getFlashcardList() {
+        return flashcardList;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

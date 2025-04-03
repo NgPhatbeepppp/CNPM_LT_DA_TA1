@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.example.cnpm_lt_da_ta.Course.Flashcard;
+import com.example.cnpm_lt_da_ta.model.Flashcard;
 import com.example.cnpm_lt_da_ta.R;
 
 public class FlashcardFragment extends Fragment {

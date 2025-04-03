@@ -87,8 +87,11 @@ public class EditUserActivity extends AppCompatActivity {
                     }
                 }
 
+                // Sau khi cập nhật thành công
                 Toast.makeText(this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                setResult(RESULT_OK); // Thông báo rằng đã có thay đổi
                 finish(); // Đóng Activity sau khi cập nhật
+
             }
         });
     }

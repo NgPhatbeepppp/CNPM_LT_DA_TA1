@@ -6,9 +6,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.cnpm_lt_da_ta.Course.FlashcardStudyActivity;
 import com.example.cnpm_lt_da_ta.DatabaseHelper;
-import com.example.cnpm_lt_da_ta.Course.Flashcard;
+import com.example.cnpm_lt_da_ta.model.Flashcard;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.cnpm_lt_da_ta.Course.Dictionary;
+import com.example.cnpm_lt_da_ta.model.Dictionary;
 import com.example.cnpm_lt_da_ta.DatabaseHelper;
 
 import java.util.ArrayList;

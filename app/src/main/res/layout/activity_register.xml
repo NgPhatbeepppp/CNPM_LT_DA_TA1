@@ -1,95 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/edit_text_email"
-        android:layout_width="379dp"
-        android:layout_height="65dp"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
+    <!-- CardView chứa form đăng ký -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomAppBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="wrap">
 
-    <EditText
-        android:id="@+id/edit_text_password"
-        android:layout_width="379dp"
-        android:layout_height="61dp"
-        android:hint="Mật khẩu"
-        android:inputType="textPassword" />
-
-    <EditText
-        android:id="@+id/edit_text_name"
-        android:layout_width="379dp"
-        android:layout_height="59dp"
-        android:hint="Họ và tên"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/edit_text_phone"
-        android:layout_width="379dp"
-        android:layout_height="62dp"
-        android:hint="Số điện thoại (tùy chọn)"
-        android:inputType="phone" />
-
-    <RadioGroup
-        android:id="@+id/radio_group_role"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/radio_button_teacher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Giáo viên" />
-
-        <RadioButton
-            android:id="@+id/radio_button_student"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Học sinh" />
-    </RadioGroup>
-
-    <Button
-        android:id="@+id/button_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Đăng ký" />
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <FrameLayout
-            android:id="@+id/frame_layout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bottomAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@color/white"
-            app:fabAlignmentMode="center"
-            app:fabCradleMargin="10dp"
-            app:fabCradleRoundedCornerRadius="50dp"
-            app:layout_anchor="@+id/frame_layout"
-            app:layout_anchorGravity="bottom|center">
-
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottomNavigationView"
-                android:layout_width="wrap_content"
+            <!-- EditText Email -->
+            <EditText
+                android:id="@+id/edit_text_email"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                app:labelVisibilityMode="labeled"
-                app:menu="@menu/bottom_menu" />
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:layout_marginBottom="12dp" />
 
-        </com.google.android.material.bottomappbar.BottomAppBar>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <!-- EditText Password -->
+            <EditText
+                android:id="@+id/edit_text_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Mật khẩu"
+                android:inputType="textPassword"
+                android:layout_marginBottom="12dp" />
 
-</LinearLayout>
+            <!-- EditText Name -->
+            <EditText
+                android:id="@+id/edit_text_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Họ và tên"
+                android:inputType="textPersonName"
+                android:layout_marginBottom="12dp" />
+
+            <!-- EditText Phone -->
+            <EditText
+                android:id="@+id/edit_text_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Số điện thoại (tùy chọn)"
+                android:inputType="phone"
+                android:layout_marginBottom="12dp" />
+
+            <!-- RadioGroup -->
+            <RadioGroup
+                android:id="@+id/radio_group_role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <RadioButton
+                    android:id="@+id/radio_button_teacher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Giáo viên" />
+
+                <RadioButton
+                    android:id="@+id/radio_button_student"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Học sinh" />
+            </RadioGroup>
+
+            <!-- Button Đăng ký (kéo dài xuống) -->
+            <Button
+                android:id="@+id/button_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đăng ký"
+                android:backgroundTint="@color/pink"
+                android:layout_marginTop="16dp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- BottomAppBar -->
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        app:fabAlignmentMode="center"
+        app:fabCradleMargin="10dp"
+        app:fabCradleRoundedCornerRadius="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_menu" />
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

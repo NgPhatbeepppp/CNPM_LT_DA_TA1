@@ -10,6 +10,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    public static final String TABLE_NEWS = "news";
+    public static final String COLUMN_NEWS_ID = "id";
+    public static final String COLUMN_NEWS_MESSAGE = "message";
+    public static final String COLUMN_NEWS_TIMESTAMP = "timestamp";
     // Thông tin cơ sở dữ liệu
     private static final String DATABASE_NAME = "language_learning.db";
     private static final int DATABASE_VERSION = 8;
@@ -86,6 +90,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_FLASHCARDSET_FLASHCARD =
             "CREATE TABLE " + TABLE_FLASHCARDSET_FLASHCARD + "("
                     + COLUMN_FLASHCARDSET_ID + " INTEGER)";
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
@@ -98,14 +103,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_FLASHCARD);
         db.execSQL(CREATE_TABLE_DICTIONARY); // Tạo bảng dictionary
         db.execSQL(CREATE_TABLE_FLASHCARDSET_FLASHCARD);
+        db.execSQL(CREATE_TABLE_NEWS); // Thêm bảng news
+
         try {
             insertDictionaryDataFromAssets(db);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         insertSampleCourseData(db);
         insertSampleFlashcardSetData(db);
         insertSampleFlashcardData(db);
+        insertSampleNewsData(db); // Chèn dữ liệu mẫu cho news (nếu cần)
     }
 
     @Override
@@ -116,6 +125,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    private static final String CREATE_TABLE_NEWS = "CREATE TABLE news (" +
+            "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "message TEXT NOT NULL, " +
+            "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)";
+
+    private void insertSampleNewsData(SQLiteDatabase db) {
+        ContentValues values = new ContentValues();
+        values.put("message", "Chào mừng bạn đến với ứng dụng!");
+        db.insert("news", null, values);
+    }
 
     private void insertDictionaryDataFromAssets(SQLiteDatabase db) throws IOException {
         InputStream is = context.getAssets().open("anhviet109K.txt");
@@ -156,6 +175,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         reader.close();
     }
+
     private void insertSampleCourseData(SQLiteDatabase db) {
         String[] courseNames = {"Tiếng Anh Giao Tiếp", "Tiếng Anh Thương Mại", "Tiếng Anh Du Lịch",
                 "Tiếng Anh Thi IELTS", "Tiếng Anh Thi TOEIC"};
@@ -246,5 +266,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
             flashcardSetId++;
         }
+    }
+
+    public void addNews(String message) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NEWS_MESSAGE, message);
+        values.put(COLUMN_NEWS_TIMESTAMP, System.currentTimeMillis());
+
+        db.insert(TABLE_NEWS, null, values);
+        db.close();
     }
 }

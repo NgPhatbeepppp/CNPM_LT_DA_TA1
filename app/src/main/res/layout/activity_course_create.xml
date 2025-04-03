@@ -5,20 +5,54 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <EditText
-        android:id="@+id/etCourseName"
+    <!-- Hộp nhập tên khóa học -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:hint="Tên khóa học" />
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="@drawable/background_card"
+        android:elevation="4dp"
+        android:layout_marginTop="8dp"
+        android:radius="12dp">
 
-    <EditText
-        android:id="@+id/etCourseDescription"
+        <EditText
+            android:id="@+id/etCourseName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:hint="Tên khóa học" />
+    </LinearLayout>
+
+    <!-- Hộp nhập mô tả khóa học -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:hint="Mô tả khóa học" />
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="@drawable/background_card"
+        android:elevation="4dp"
+        android:layout_marginTop="8dp"
+        android:radius="12dp">
 
+        <EditText
+            android:id="@+id/etCourseDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:hint="Mô tả khóa học" />
+    </LinearLayout>
+
+    <!-- Hộp nhập link ảnh khóa học -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="@drawable/background_card"
+        android:elevation="4dp"
+        android:layout_marginTop="8dp"
+        android:radius="12dp">
 
         <EditText
             android:id="@+id/etCourseImage"
@@ -26,28 +60,30 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:hint="Link ảnh khóa học" />
-
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chọn bộ flashcard:"
-            android:layout_marginTop="16dp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvFlashcardSets"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/btnSaveCourse"
-            android:layout_marginTop="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/pink"
-            android:layout_gravity="center_horizontal"
-            android:text="Lưu Khóa học" />
-
     </LinearLayout>
+
+    <!-- Chọn bộ flashcard -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chọn bộ flashcard:"
+        android:layout_marginTop="16dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFlashcardSets"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Nút lưu khóa học -->
+    <Button
+        android:id="@+id/btnSaveCourse"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/pink"
+        android:layout_gravity="center_horizontal"
+        android:text="Lưu Khóa học" />
+
+</LinearLayout>

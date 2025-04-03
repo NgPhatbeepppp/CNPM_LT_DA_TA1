@@ -1,6 +1,7 @@
 package com.example.cnpm_lt_da_ta.Manager;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -9,12 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cnpm_lt_da_ta.Course.Course;
-import com.example.cnpm_lt_da_ta.Course.FlashcardSet;
+import com.example.cnpm_lt_da_ta.DatabaseHelper;
+import com.example.cnpm_lt_da_ta.model.Course;
+import com.example.cnpm_lt_da_ta.model.FlashcardSet;
 import com.example.cnpm_lt_da_ta.DAO.CourseDAO;
 import com.example.cnpm_lt_da_ta.DAO.FlashcardSetDAO;
 import com.example.cnpm_lt_da_ta.ManagerAdapter.FlashcardSetManagementAdapter;
 import com.example.cnpm_lt_da_ta.R;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +71,8 @@ public class CourseCreateActivity extends AppCompatActivity {
         String name = etCourseName.getText().toString().trim();
         String description = etCourseDescription.getText().toString().trim();
         String image = etCourseImage.getText().toString().trim();
-        int popularity = 0; // Giá trị popularity mặc định
-        int isNew = 1; // Giá trị isNew mặc định là 1 (true)
+        int popularity = 0; // Giá trị mặc định
+        int isNew = 1; // Đánh dấu là khóa học mới
 
         if (name.isEmpty() || description.isEmpty() || image.isEmpty()) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
@@ -77,16 +80,25 @@ public class CourseCreateActivity extends AppCompatActivity {
         }
 
         Course course = new Course(name, description, image, popularity, isNew);
-        courseDAO.insertCourse(course);
 
-        int newCourseId = course.getId();
-        // Cập nhật courseId cho các FlashcardSet đã chọn
-        for (FlashcardSet flashcardSet : selectedFlashcardSets) {
-            flashcardSet.setCourseId(newCourseId);
-            flashcardSetDAO.updateFlashcardSet(flashcardSet);
+        // Thêm vào SQLite
+        CourseDAO courseDAO = new CourseDAO(this);
+        long result = courseDAO.addCourse(course);
+
+        if (result != -1) {
+            Toast.makeText(this, "Thêm khóa học thành công!", Toast.LENGTH_SHORT).show();
+            Log.d("SQLite", "Khóa học đã thêm vào SQLite với ID: " + result);
+
+            // 🔹 Thêm thông báo vào bảng news
+            DatabaseHelper dbHelper = new DatabaseHelper(this);
+            String newsMessage = "Khóa học " + name + " đã được tạo";
+            dbHelper.addNews(newsMessage);
+
+            finish(); // Đóng Activity sau khi thêm thành công
+        } else {
+            Toast.makeText(this, "Lỗi khi thêm khóa học", Toast.LENGTH_SHORT).show();
+            Log.e("SQLite", "Lỗi khi thêm khóa học vào database");
         }
-
-        finish();
     }
 
     @Override

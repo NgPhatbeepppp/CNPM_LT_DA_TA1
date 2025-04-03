@@ -1,4 +1,4 @@
-package com.example.cnpm_lt_da_ta.Course;
+package com.example.cnpm_lt_da_ta.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 public class Flashcard implements Parcelable {
